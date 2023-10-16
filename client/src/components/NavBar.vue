@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
+import LoginBadge from './LoginBadge.vue';
 </script>
 
 <template>
@@ -20,9 +21,7 @@ import { ref } from 'vue'
                     <a class="navbar-item" href="#">Calorie Calculator</a>
                 </div>
                 <div class="navbar-end">
-                    <RouterLink class="navbar-item" to="/login">
-                            <i class="fas fa-user"></i>
-                    </RouterLink>
+                    <LoginBadge />
                 </div>
             </div>
         </nav>
@@ -37,7 +36,7 @@ import { ref } from 'vue'
 .navbar-item{
     border: 2px solid transparent;
 }
-.router-link-active{
+.router-link-active, .login-badge:active{
     border-bottom: 2px solid #00FF00;
 }
 </style>

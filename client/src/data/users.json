@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "john@doe.com",
+            "admin": true
+        },
+        {
+            "firstName": "test",
+            "lastName": "user",
+            "email": "test@user.com",
+            "admin": false
+        },
+        {
+            "firstName": "Barack",
+            "lastName": "Obama",
+            "email": "obamab@potus.com",
+            "admin": false
+        }
+    ]
+}

@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/workoutle',
       name: 'workoutle',
       component: () => import('../views/Workoutle.vue')
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: () => import('../views/Account.vue')
     }
   ]
 })

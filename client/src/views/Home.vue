@@ -157,7 +157,7 @@ function openPostModal() {
 
 <style scoped>
 .box, .panel {
-    height: 75vh;
+    height: 100%;
     background-color: #f5f5f5;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }

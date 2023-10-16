@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
 import { type Workout } from '@/models/workouts';
 import workoutsData from '@/data/workouts.json';
