@@ -3,18 +3,16 @@
 </script>
 
 <template>
-    <div class="hero is-black is-medium">
+    <section class="hero is-medium is-black">
         <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Secondary title
-                </h1>
-                <h2 class="subtitle">
-                    Secondary subtitle
-                </h2>
-            </div>
+          <p class="title">
+            Medium hero
+          </p>
+          <p class="subtitle">
+            Medium subtitle
+          </p>
         </div>
-    </div>
+      </section>
 </template>
 
 <style scoped>

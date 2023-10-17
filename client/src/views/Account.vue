@@ -1,13 +1,42 @@
 <script setup lang="ts">
+import { getSession, login, logout } from "@/models/session";
+import router from "@/router";
 
+const session = getSession();
+
+const doLogout = () => {
+    logout();
+    router.push("/login");
+}
 </script>
 
 <template>
-    <div>
-        <h1>Account</h1>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-half is-offset-one-quarter">
+                <div class="panel">
+                    <p class="panel-heading">
+                        Welcome {{ session.user?.firstName }} {{ session.user?.lastName }}!
+                    </p>
+                    <div class="panel-block">
+                        <div class="content">
+                            <p>
+                                Email: {{ session.user?.email }}
+                            </p>
+                            <p>
+                                Role: {{ session.user?.role }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="panel-block">
+                        <div type="submit" class="button" @click.prevent="doLogout">
+                            Logout
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -14,11 +14,10 @@ import LoginBadge from './LoginBadge.vue';
             </div>
             <div class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="#">Personal Workouts</a>
-                    <RouterLink class="navbar-item" to="/workoutle">
-                          Workoutle
-                      </RouterLink>                      
-                    <a class="navbar-item" href="#">Calorie Calculator</a>
+                    <RouterLink class="navbar-item" to="/my-workouts">My Workouts</RouterLink>
+                    <RouterLink class="navbar-item" to="/statistics">Statistics</RouterLink>
+                    <RouterLink class="navbar-item" to="/friends">Friends</RouterLink>
+                    <a class="navbar-item" href="#">Search</a>
                 </div>
                 <div class="navbar-end">
                     <LoginBadge />

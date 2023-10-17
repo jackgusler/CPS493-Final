@@ -6,15 +6,12 @@ import MainHero from "./components/MainHero.vue";
 
 <template>
   <header>
-    <NavBar />
-    <RouterView />
-    <MainHero />
+
+    <body>
+      <NavBar />
+      <RouterView />
+    </body>
   </header>
 </template>
 
-<style scoped>
-header {
-  background-color: #7e7e7e;
-}
-
-</style>
+<style scoped></style>
