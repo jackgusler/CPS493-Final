@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Friends from "../components/FriendFeed.vue";
+import Users from "../components/UserFeed.vue";
 </script>
 
 <template>
@@ -7,6 +8,9 @@ import Friends from "../components/FriendFeed.vue";
         <div class="columns">
             <div class="column is-half">
                 <Friends />
+            </div>
+            <div class="column is-half">
+                <Users />
             </div>
         </div>
     </div>

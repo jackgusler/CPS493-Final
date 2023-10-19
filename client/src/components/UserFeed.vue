@@ -9,14 +9,15 @@ import { ref } from 'vue';
 const session = getSession()
 let posts = ref<Post[]>(postData.posts)
 
-posts = ref(posts.value.slice().reverse());
+let userPosts = ref(posts.value.filter((post) => post.userId === session.user?.id))
+userPosts = ref(userPosts.value.slice().reverse());
 
 </script>
 
 <template>
     <nav class="panel">
         <p class="panel-heading">
-            Home Feed
+            Your Posts
         </p>
         <div class="panel-block">
             <p class="control has-icons-left">
@@ -27,7 +28,7 @@ posts = ref(posts.value.slice().reverse());
             </p>
         </div>
         <div class="wrapper">
-            <div v-for="post in posts" :key="post.userId">
+            <div v-for="post in userPosts" :key="post.userId">
                 <div :class="{ 'is-right': post.userId === session.user?.id }">
                     <div class="panel-block is-right">
                         <div class="card">

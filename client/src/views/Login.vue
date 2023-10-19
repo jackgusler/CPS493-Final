@@ -25,7 +25,7 @@ const doLogin = () => {
       </p>
         <div class="panel-block">
             <div class="field">
-              <label class="label">Username</label>
+              <label class="label">Email</label>
               <div class="control">
                 <input
                   v-model="email"

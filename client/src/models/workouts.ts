@@ -14,6 +14,6 @@ export function getWorkouts(): Workout[] {
     return data.workouts.map( x => ({ ...x }) )
 }
 
-export function getUserByName(name: string): Workout | undefined {
+export function getWorkoutsByName(name: string): Workout | undefined {
     return getWorkouts().find(x => x.name === name )
 }

@@ -9,7 +9,7 @@ export interface User {
     password: string,
     role: "admin" | "user",
     token?: string
-    workouts?: Workout[]
+    workoutsByIds: number[]
 }
 
 export function getUsers(): User[] {

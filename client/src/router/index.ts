@@ -26,11 +26,13 @@ const router = createRouter({
       path: '/statistics',
       name: 'statistics',
       component: () => import('../views/Statistics.vue'),
+      beforeEnter: requireLogin
     },
     {
       path: '/friends',
       name: 'friends',
       component: () => import('../views/Friends.vue'),
+      beforeEnter: requireLogin
     },
     {
       path: '/account',

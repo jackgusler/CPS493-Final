@@ -1,31 +1,40 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Doe",
-            "email": "john@doe.com",
-            "password": "test",
-            "role": "admin",
-            "workouts": [
-                
-            ]
-        },
-        {
-            "id": 2,
-            "firstName": "test",
-            "lastName": "user",
-            "email": "test@user.com",
-            "password": "test",
-            "role": "user"
-        },
-        {
-            "id": 3,
-            "firstName": "Barack",
-            "lastName": "Obama",
-            "email": "obamab@potus.com",
-            "password": "test",
-            "role": "user"
-        }
-    ]
+  "users": [
+    {
+      "id": 0,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@doe.com",
+      "password": "test",
+      "role": "admin",
+      "workoutsByIds": [2, 3]
+    },
+    {
+      "id": 1,
+      "firstName": "test",
+      "lastName": "user",
+      "email": "test@user.com",
+      "password": "test",
+      "role": "user",
+      "workoutsByIds": [23, 64]
+    },
+    {
+      "id": 2,
+      "firstName": "Barack",
+      "lastName": "Obama",
+      "email": "obamab@potus.com",
+      "password": "test",
+      "role": "user",
+      "workoutsByIds": [24, 49, 10]
+    },
+    {
+      "id": 3,
+      "firstName": "admin",
+      "lastName": "admin",
+      "email": "admin@admin.com",
+      "password": "admin",
+      "role": "admin",
+      "workoutsByIds": [2, 3, 4, 5, 6, 7, 8, 9]
+    }
+  ]
 }
