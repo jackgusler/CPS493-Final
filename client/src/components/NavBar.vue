@@ -20,7 +20,6 @@ const session = getSession()
           <RouterLink class="navbar-item" to="/my-workouts">My Workouts</RouterLink>
           <RouterLink class="navbar-item" to="/statistics">Statistics</RouterLink>
           <RouterLink class="navbar-item" to="/friends">Friends</RouterLink>
-          <a class="navbar-item" href="#">Search</a>
         </div>
         <div class="navbar-end">
           <div v-if="session.user?.admin" class="navbar-item dropdown is-hoverable is-right">
