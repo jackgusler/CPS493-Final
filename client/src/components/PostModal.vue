@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import { handleError, ref } from 'vue';
-import { type Workout } from '../models/workouts';
-import workoutsData from '../data/workouts.json';
-import { getSession } from '@/models/session';
-import { type Post } from '../models/posts';
-import postData from '../data/posts.json';
-import { closeModal, openSuccessMessage } from '@/models/postModal';
+import { handleError, ref } from 'vue'
+import { type Workout } from '../models/workouts'
+import workoutsData from '../data/workouts.json'
+import { getSession } from '@/models/session'
+import { type Post } from '../models/posts'
+import postData from '../data/posts.json'
+import { closeModal, openSuccessMessage } from '@/models/postModal'
 
 const session = getSession()
 const workout = ref<Workout | null>(null)
 const post = ref<Post | null>(null)
 const showDangerMessage = ref(false)
 
-let workoutChoice = 0
+let workoutChoice = -1
 let description = ''
 let picture = ''
 
 function getWorkout(id: number) {
-    return workout.value = workoutsData.workouts.find((workout) => workout.id === id) || null;
+    return workout.value = workoutsData.workouts.find((workout) => workout.id === id) || null
 }
 
 function closeMessage() {
-    showDangerMessage.value = false;
+    showDangerMessage.value = false
 }
 
 function handleCloseModal() {
@@ -31,8 +31,8 @@ function handleCloseModal() {
 }
 
 function makeAPost() {
-    if (workoutChoice === 0 || description === '' || picture === '') {
-        showDangerMessage.value = true;
+    if (workoutChoice === -1 || description === '' || picture === '') {
+        showDangerMessage.value = true
         return;
     }
     if (session) {
@@ -58,7 +58,7 @@ function makeAPost() {
                 <p class="modal-card-title">
                     Make A Post!
                 </p>
-                <div class="delete" aria-label="close" @click="handleCloseModal"></div>
+                <div class="delete" aria-label="close" @click="closeModal"></div>
             </header>
             <section class="modal-card-body">
                 <div class="field">
@@ -116,7 +116,7 @@ function makeAPost() {
                 <div class="button is-success" @click="makeAPost">
                     Post
                 </div>
-                <div class="button" @click="handleCloseModal">
+                <div class="button" @click="closeModal">
                     Cancel
                 </div>
             </footer>

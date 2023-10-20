@@ -2,16 +2,25 @@
 import { type Post } from '../models/posts'
 import postData from '../data/posts.json'
 import userData from '../data/users.json'
-import { getSession } from '@/models/session';
+import { getSession } from '@/models/session'
 import workoutsData from '../data/workouts.json'
-import { ref } from 'vue';
+import { ref, computed } from 'vue'
 
 const session = getSession()
 let posts = ref<Post[]>(postData.posts)
 
 let userPosts = ref(posts.value.filter((post) => post.userId === session.user?.id))
-userPosts = ref(userPosts.value.slice().reverse());
+userPosts = ref(userPosts.value.slice().reverse())
 
+const searchQuery = ref('')
+
+const filteredPosts = computed(() => {
+  const query = searchQuery.value.toLowerCase()
+  return userPosts.value.filter((post) => {
+    const workoutName = workoutsData.workouts[post.workoutId].name.toLowerCase()
+    return workoutName.includes(query)
+  })
+})
 </script>
 
 <template>
@@ -21,17 +30,20 @@ userPosts = ref(userPosts.value.slice().reverse());
         </p>
         <div class="panel-block">
             <p class="control has-icons-left">
-                <input class="input" type="text" placeholder="Search">
+                <input class="input" type="text" placeholder="Search by workout name!" v-model="searchQuery">
                 <span class="icon is-left">
                     <i class="fas fa-search" aria-hidden="true"></i>
                 </span>
             </p>
         </div>
         <div class="wrapper">
-            <div v-for="post in userPosts" :key="post.userId">
+            <div v-for="post in filteredPosts" :key="post.userId">
                 <div :class="{ 'is-right': post.userId === session.user?.id }">
                     <div class="panel-block is-right">
                         <div class="card">
+                            <p class="user">
+                                {{ userData.users[post.userId].username }}
+                            </p>
                             <div class="card-image">
                                 <figure class="image is-4by3">
                                     <img :src="post?.picture">
@@ -76,5 +88,19 @@ userPosts = ref(userPosts.value.slice().reverse());
     width: 100%;
     min-height: 50vh;
     max-height: 84vh;
+}
+
+.user {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+.card {
+    border: 2px solid black;
+}
+.panel-block {
+    justify-content: right;
 }
 </style>

@@ -1,841 +1,841 @@
 {
     "workouts": [
         {
-          "id": 1,
+          "id": 0,
           "name": "Running or jogging",
           "description": "A cardiovascular exercise involving running or jogging at a steady pace.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "30 minutes to 1 hour or more"
+          "duration": 45
         },
         {
-          "id": 2,
+          "id": 1,
           "name": "Cycling",
           "description": "A low-impact cardio workout performed on a bicycle.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "30 minutes to 1 hour or more"
+          "duration": 45
         },
         {
-          "id": 3,
+          "id": 2,
           "name": "Swimming",
           "description": "A full-body workout involving swimming in a pool or open water.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "30 minutes to 1 hour or more"
+          "duration": 45
         },
         {
-          "id": 4,
+          "id": 3,
           "name": "Jump rope",
           "description": "A high-intensity cardio exercise using a skipping rope.",
           "image": "",
           "category": "Cardio",
           "intensity": "Hard",
-          "duration": "15 to 30 minutes"
+          "duration": 25
         },
         {
-          "id": 5,
+          "id": 4,
           "name": "Rowing",
           "description": "A full-body cardio workout using a rowing machine or rowing in water.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "30 minutes to 1 hour or more"
+          "duration": 45
         },
         {
-          "id": 6,
+          "id": 5,
           "name": "Stair climbing",
           "description": "A lower body and cardio workout involving climbing stairs or using a stair stepper machine.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "20 to 45 minutes"
+          "duration": 35
         },
         {
-          "id": 7,
+          "id": 6,
           "name": "High-intensity interval training",
           "description": "A High-intensity workout alternating between short bursts of intense exercise and brief periods of rest or lower-intensity exercise.",
           "image": "",
           "category": "Cardio",
           "intensity": "Hard",
-          "duration": "15 to 30 minutes"
+          "duration": 25
         },
         {
-          "id": 8,
+          "id": 7,
           "name": "Aerobics",
           "description": "A group fitness class that combines rhythmic aerobic exercise with stretching and strength training routines.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "30 minutes to 1 hour"
+          "duration": 45
         },
         {
-          "id": 9,
+          "id": 8,
           "name": "Dancing",
           "description": "Dance-based workouts that provide cardiovascular exercise while having fun.",
           "image": "",
           "category": "Cardio",
           "intensity": "Easy",
-          "duration": "30 minutes to 1 hour"
+          "duration": 45
         },
         {
-          "id": 10,
+          "id": 9,
           "name": "Kickboxing",
           "description": "A High-energy martial arts-inspired workout combining boxing and kicking techniques.",
           "image": "",
           "category": "Cardio",
           "intensity": "Hard",
-          "duration": "30 minutes to 1 hour"
+          "duration": 45
         },
         {
-          "id": 11,
+          "id": 10,
           "name": "Spinning",
           "description": "Indoor cycling classes with varying levels of intensity.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "45 minutes to 1 hour"
+          "duration": 55
         },
         {
-          "id": 12,
+          "id": 11,
           "name": "Elliptical machine workouts",
           "description": "Low-impact cardio workouts using elliptical machines.",
           "image": "",
           "category": "Cardio",
           "intensity": "Easy",
-          "duration": "30 minutes to 1 hour"
+          "duration": 45
         },
         {
-          "id": 13,
+          "id": 12,
           "name": "Inline skating or rollerblading",
           "description": "A fun and effective cardio workout on inline skates.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "30 minutes to 1 hour"
+          "duration": 45
         },
         {
-          "id": 14,
+          "id": 13,
           "name": "Cross-country skiing",
           "description": "A full-body cardio workout involving skiing across snow-covered terrain.",
           "image": "",
           "category": "Cardio",
           "intensity": "Medium",
-          "duration": "45 minutes to 1.5 hours"
+          "duration": 70
         },
         {
-          "id": 15,
+          "id": 14,
           "name": "Circuit training",
           "description": "A workout that combines strength exercises with short bursts of cardio, performed in a circuit.",
           "image": "",
           "category": "Cardio",
-          "intensity": "Varies",
-          "duration": "Varies"
+          "intensity": "Medium",
+          "duration": 30
         },
         {
-            "id": 16,
+            "id": 15,
             "name": "Push-Ups",
             "description": "A bodyweight exercise that targets the chest, shoulders, and triceps.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Easy",
-            "duration": "10 to 20 minutes"
+            "duration": 15
         },
         {
-            "id": 17,
+            "id": 16,
             "name": "Bench Press",
             "description": "A compound exercise using a barbell or dumbbells to target the chest, shoulders, and triceps.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Medium",
-            "duration": "30 to 45 minutes"
+            "duration": 40
         },
         {
-            "id": 18,
+            "id": 17,
             "name": "Dumbbell Press",
             "description": "A chest and shoulder exercise using dumbbells to target the pectoral muscles.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Easy",
-            "duration": "20 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 19,
+            "id": 18,
             "name": "Pull-Ups/Chin-Ups",
             "description": "A bodyweight exercise targeting the back, biceps, and shoulders.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Medium",
-            "duration": "15 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 20,
+            "id": 19,
             "name": "Bent-Over Rows",
             "description": "A compound exercise using a barbell or dumbbells to target the back and biceps.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Easy",
-            "duration": "20 to 40 minutes"
+            "duration": 30
         },
         {
-            "id": 21,
+            "id": 20,
             "name": "Dumbbell Rows",
             "description": "A back and biceps exercise using dumbbells to target the latissimus dorsi.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Easy",
-            "duration": "20 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 22,
+            "id": 21,
             "name": "Bicep Curls",
             "description": "Isolation exercises for the biceps using dumbbells or a barbell.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Easy",
-            "duration": "15 to 25 minutes"
+            "duration": 20
         },
         {
-            "id": 23,
+            "id": 22,
             "name": "Tricep Dips",
             "description": "Bodyweight exercises that target the triceps.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Easy",
-            "duration": "10 to 20 minutes"
+            "duration": 15
         },
         {
-            "id": 24,
+            "id": 23,
             "name": "Shoulder Press",
             "description": "Strength exercises for the shoulder muscles using dumbbells or a barbell.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Easy",
-            "duration": "20 to 35 minutes"
+            "duration": 25
         },
         {
-            "id": 25,
+            "id": 24,
             "name": "Lateral Raises",
             "description": "Exercises targeting the deltoid muscles for shoulder development.",
             "image": "",
             "category": "Strength (Upper Body)",
             "intensity": "Easy",
-            "duration": "10 to 20 minutes"
+            "duration": 15
         },
         {
-            "id": 26,
+            "id": 25,
             "name": "Squats",
             "description": "A lower body exercise targeting the quadriceps, hamstrings, and glutes.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Medium",
-            "duration": "20 to 40 minutes"
+            "duration": 30
         },
         {
-            "id": 27,
+            "id": 26,
             "name": "Lunges",
             "description": "Exercises that work the quadriceps, hamstrings, and glutes.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Easy",
-            "duration": "15 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 28,
+            "id": 27,
             "name": "Deadlifts",
             "description": "Compound exercises targeting the back, glutes, and hamstrings.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Medium",
-            "duration": "20 to 45 minutes"
+            "duration": 35
         },
         {
-            "id": 29,
+            "id": 28,
             "name": "Leg Press",
             "description": "A lower body strength exercise using a leg press machine.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Easy",
-            "duration": "20 to 35 minutes"
+            "duration": 25
         },
         {
-            "id": 31,
+            "id": 29,
             "name": "Calf Raises",
             "description": "Exercises for the calf muscles, often done with bodyweight or weights.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Easy",
-            "duration": "15 to 20 minutes"
+            "duration": 17
         },
         {
-            "id": 32,
+            "id": 30,
             "name": "Glute Bridges",
             "description": "Exercises to strengthen the glutes and lower back muscles.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Easy",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 33,
+            "id": 31,
             "name": "Romanian Deadlifts",
             "description": "A variation of the deadlift exercise targeting the hamstrings and lower back.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Medium",
-            "duration": "20 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 34,
+            "id": 32,
             "name": "Box Jumps",
             "description": "Plyometric exercises involving jumping onto a box or platform.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Hard",
-            "duration": "15 to 20 minutes"
+            "duration": 17
         },
         {
-            "id": 35,
+            "id": 33,
             "name": "Step-Ups",
             "description": "Exercises that target the lower body, particularly the quadriceps and glutes.",
             "image": "",
             "category": "Strength (Lower Body)",
             "intensity": "Easy",
-            "duration": "15 to 25 minutes"
+            "duration": 20
         },
         {
-            "id": 36,
+            "id": 34,
             "name": "Planks",
             "description": "Core-strengthening exercises that engage the abdominal muscles.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Easy",
-            "duration": "1 to 3 minutes per set"
+            "duration": 120
         },
         {
-            "id": 37,
+            "id": 35,
             "name": "Russian Twists",
             "description": "Core exercises involving rotational movements.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Easy",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 38,
+            "id": 36,
             "name": "Bicycle Crunches",
             "description": "Abdominal exercises that mimic the motion of pedaling a bicycle.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Easy",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 39,
+            "id": 37,
             "name": "Leg Raises",
             "description": "Core exercises that target the lower abdominal muscles.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Easy",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 40,
+            "id": 38,
             "name": "Medicine Ball Slams",
             "description": "Dynamic exercises involving slamming a medicine ball onto the ground.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Hard",
-            "duration": "15 to 20 minutes"
+            "duration": 17
         },
         {
-            "id": 41,
+            "id": 39,
             "name": "Woodchoppers",
             "description": "An exercise that engages the core and obliques, often done with a cable machine or resistance band.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Easy",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 42,
+            "id": 40,
             "name": "Hanging Leg Raises",
             "description": "A challenging core exercise that involves hanging from a bar and lifting the legs.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Hard",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 43,
+            "id": 41,
             "name": "Stability Ball Rollouts",
             "description": "Core-strengthening exercise using a stability ball and rolling out the arms.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Easy",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 44,
+            "id": 42,
             "name": "Superman Holds",
             "description": "A back-strengthening exercise where you lie face down and lift both arms and legs.",
             "image": "",
             "category": "Strength (Lower Back)",
             "intensity": "Easy",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 45,
+            "id": 43,
             "name": "V-Sits",
             "description": "A core exercise involving sitting on the floor and lifting both legs and upper body to form a V shape.",
             "image": "",
             "category": "Strength (Core)",
             "intensity": "Easy",
-            "duration": "10 to 15 minutes"
+            "duration": 12
         },
         {
-            "id": 46,
+            "id": 44,
             "name": "Kettlebell Swings",
             "description": "A dynamic full-body exercise that involves swinging a kettlebell.",
             "image": "",
             "category": "Full Body",
             "intensity": "Medium",
-            "duration": "15 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 47,
+            "id": 45,
             "name": "Turkish Get-Ups",
             "description": "A full-body exercise that involves transitioning from lying down to standing while holding a weight.",
             "image": "",
             "category": "Full Body",
             "intensity": "Easy",
-            "duration": "20 to 45 minutes"
+            "duration": 35
         },
         {
-            "id": 48,
+            "id": 46,
             "name": "Farmer's Walks",
             "description": "A strength and grip exercise that involves walking while carrying heavy weights in each hand.",
             "image": "",
             "category": "Full Body",
             "intensity": "Medium",
-            "duration": "20 to 45 minutes"
+            "duration": 35
         },
         {
-            "id": 49,
+            "id": 47,
             "name": "Clean and Press",
             "description": "A compound exercise that combines lifting a weight from the ground to overhead.",
             "image": "",
             "category": "Full Body",
             "intensity": "Medium",
-            "duration": "20 to 45 minutes"
+            "duration": 35
         },
         {
-            "id": 50,
+            "id": 48,
             "name": "Burpees",
             "description": "A High-intensity full-body exercise involving a combination of squats, push-ups, and jumps.",
             "image": "",
             "category": "Full Body",
             "intensity": "Hard",
-            "duration": "15 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 51,
+            "id": 49,
             "name": "Wall Balls",
             "description": "A full-body exercise that combines squatting and throwing a medicine ball against a wall.",
             "image": "",
             "category": "Full Body",
             "intensity": "Medium",
-            "duration": "15 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 52,
+            "id": 50,
             "name": "Battle Ropes",
             "description": "A High-intensity full-body workout using heavy ropes in wave-like motions.",
             "image": "",
             "category": "Full Body",
             "intensity": "Hard",
-            "duration": "15 to 30 minutes"
+            "duration": 25
         },
         {
-            "id": 53,
+            "id": 51,
             "name": "Thrusters",
             "description": "A compound exercise combining a front squat with an overhead press.",
             "image": "",
             "category": "Full Body",
             "intensity": "Medium",
-            "duration": "20 to 45 minutes"
+            "duration": 35
         },
         {
-            "id": 54,
+            "id": 52,
             "name": "Bear Crawls",
             "description": "A full-body exercise that mimics the crawling movement of a bear.",
             "image": "",
             "category": "Full Body",
             "intensity": "Easy",
-            "duration": "20 to 45 minutes"
+            "duration": 35
         },
         {
-            "id": 55,
+            "id": 53,
             "name": "Deadlift High Pulls",
             "description": "A full-body exercise involving a deadlift motion combined with a High pull using a barbell or kettlebell.",
             "image": "",
             "category": "Full Body",
             "intensity": "Medium",
-            "duration": "20 to 45 minutes"
+            "duration": 35
         },
         {
-            "id": 56,
+            "id": 54,
             "name": "Hatha Yoga",
             "description": "A traditional form of yoga that emphasizes physical postures, breathing, and relaxation.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "45 to 90 minutes"
+            "duration": 70
         },
         {
-            "id": 57,
+            "id": 55,
             "name": "Vinyasa Yoga",
             "description": "A flowing style of yoga that links breath with movement, creating a dynamic practice.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "45 to 90 minutes"
+            "duration": 70
         },
         {
-            "id": 58,
+            "id": 56,
             "name": "Ashtanga Yoga",
             "description": "A rigorous form of yoga characterized by a set sequence of postures and continuous movement.",
             "image": "",
             "category": "Yoga",
             "intensity": "Hard",
-            "duration": "60 to 120 minutes"
+            "duration": 90
         },
         {
-            "id": 59,
+            "id": 57,
             "name": "Bikram Yoga",
             "description": "A style of yoga practiced in a heated room with a specific sequence of postures.",
             "image": "",
             "category": "Yoga",
             "intensity": "Hard",
-            "duration": "60 to 90 minutes"
+            "duration": 75
         },
         {
-            "id": 60,
+            "id": 58,
             "name": "Iyengar Yoga",
             "description": "A form of yoga that focuses on precise alignment and the use of props to support postures.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "45 to 90 minutes"
+            "duration": 70
         },
         {
-            "id": 61,
+            "id": 59,
             "name": "Kundalini Yoga",
             "description": "A spiritual and physical practice that combines postures, breathwork, and meditation.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "45 to 60 minutes"
+            "duration": 50
         },
         {
-            "id": 62,
+            "id": 60,
             "name": "Power Yoga",
             "description": "A vigorous and fitness-based approach to yoga, emphasizing strength and flexibility.",
             "image": "",
             "category": "Yoga",
             "intensity": "Hard",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 63,
+            "id": 61,
             "name": "Yin Yoga",
             "description": "A slow-paced style of yoga with long-held poses, promoting relaxation and flexibility.",
             "image": "",
             "category": "Yoga",
             "intensity": "Low",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 64,
+            "id": 62,
             "name": "Restorative Yoga",
             "description": "A form of yoga that uses props to support the body in relaxation and healing.",
             "image": "",
             "category": "Yoga",
             "intensity": "Low",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 65,
+            "id": 63,
             "name": "Anusara Yoga",
             "description": "A style of yoga that focuses on alignment, heart-opening postures, and a positive philosophy.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 66,
+            "id": 64,
             "name": "Jivamukti Yoga",
             "description": "A physically and intellectually stimulating form of yoga that combines vinyasa flow with spiritual teachings.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 67,
+            "id": 65,
             "name": "Sivananda Yoga",
             "description": "A traditional and holistic form of yoga that emphasizes proper breathing, relaxation, and positive thinking.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 68,
+            "id": 66,
             "name": "Yoga Nidra",
             "description": "A deep relaxation practice often referred to as yogic sleep, promoting profound rest and rejuvenation.",
             "image": "",
             "category": "Yoga",
             "intensity": "Low",
-            "duration": "30 to 45 minutes"
+            "duration": 40
         },
         {
-            "id": 69,
+            "id": 67,
             "name": "AcroYoga",
             "description": "A blend of acrobatics, yoga, and healing arts, practiced with a partner to build trust and connection.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 70,
+            "id": 68,
             "name": "Prenatal Yoga",
             "description": "Yoga tailored for expectant mothers, focusing on gentle poses, breathwork, and relaxation.",
             "image": "",
             "category": "Yoga",
             "intensity": "Low",
-            "duration": "45 to 60 minutes"
+            "duration": 50
         },
         {
-            "id": 71,
+            "id": 69,
             "name": "Chair Yoga",
             "description": "A modified form of yoga practiced while seated or using a chair for support, ideal for those with limited mobility.",
             "image": "",
             "category": "Yoga",
             "intensity": "Low",
-            "duration": "30 to 45 minutes"
+            "duration": 40
         },
         {
-            "id": 72,
+            "id": 70,
             "name": "Laughter Yoga",
             "description": "A unique practice that combines laughter exercises with yogic deep-breathing techniques to reduce stress and boost mood.",
             "image": "",
             "category": "Yoga",
             "intensity": "Low",
-            "duration": "30 to 45 minutes"
+            "duration": 40
         },
         {
-            "id": 73,
+            "id": 71,
             "name": "Aerial Yoga",
             "description": "Yoga practiced in hammocks or silk fabrics, allowing for suspended poses and deep stretching.",
             "image": "",
             "category": "Yoga",
             "intensity": "Easy",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 74,
+            "id": 72,
             "name": "SUP Yoga",
             "description": "Yoga performed on a paddleboard on water, challenging balance and core strength.",
             "image": "",
             "category": "Yoga",
             "intensity": "Hard",
-            "duration": "60 to 75 minutes"
+            "duration": 70
         },
         {
-            "id": 75,
+            "id": 73,
             "name": "Mat Pilates",
             "description": "A Pilates workout performed on a mat, focusing on core strength and flexibility.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 to 60 minutes"
+            "duration": 50
         },
         {
-            "id": 76,
+            "id": 74,
             "name": "Reformer Pilates",
             "description": "Pilates exercises performed on a reformer machine, providing resistance for a full-body workout.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 to 60 minutes"
+            "duration": 50
         },
         {
-            "id": 77,
+            "id": 75,
             "name": "Cadillac Pilates",
             "description": "Pilates exercises using the Cadillac or Trapeze Table apparatus, allowing for a wide range of exercises.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 to 60 minutes"
+            "duration": 50
         },
         {
-            "id": 78,
+            "id": 76,
             "name": "Wunda Chair Pilates",
             "description": "Pilates exercises performed on a Wunda Chair, which provides resistance and support for various movements.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 79,
+            "id": 77,
             "name": "Barre Pilates",
             "description": "A fusion of Pilates and ballet-inspired movements, often using a ballet barre for support and balance.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 80,
+            "id": 78,
             "name": "Tower Pilates",
             "description": "Pilates exercises performed on a tower apparatus, which includes various attachments for added resistance and versatility.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 81,
+            "id": 79,
             "name": "Springboard Pilates",
             "description": "Pilates exercises performed on a springboard apparatus, offering a range of resistance levels and movement options.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 82,
+            "id": 80,
             "name": "Magic Circle Exercises",
             "description": "Pilates exercises using a Magic Circle (a flexible ring), which adds resistance and engages various muscle groups.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 83,
+            "id": 81,
             "name": "Spine Corrector Pilates",
             "description": "Pilates exercises performed on a Spine Corrector apparatus, designed to improve spinal flexibility and strength.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 84,
+            "id": 82,
             "name": "Ladder Barrel Pilates",
             "description": "Pilates exercises performed on a Ladder Barrel apparatus, focusing on core strength, flexibility, and balance.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 85,
+            "id": 83,
             "name": "Guillotine Pilates",
             "description": "Pilates exercises performed on a Guillotine apparatus, providing unique resistance and movement options.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 86,
+            "id": 84,
             "name": "Pedi-Pole Pilates",
             "description": "Pilates exercises performed on a Pedi-Pole apparatus, enhancing balance and stability while targeting various muscle groups.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 87,
+            "id": 85,
             "name": "Small Barrel Pilates",
             "description": "Pilates exercises performed using a Small Barrel apparatus, focusing on core strength and flexibility.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 88,
+            "id": 86,
             "name": "Foot Corrector Pilates",
             "description": "Pilates exercises targeting foot and lower body alignment and strength using specialized equipment.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 89,
+            "id": 87,
             "name": "Powerhouse Pilates",
             "description": "Pilates workouts that focus on strengthening the core and overall body with an emphasis on the Pilates powerhouse.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 90,
+            "id": 88,
             "name": "Standing Pilates",
             "description": "Pilates exercises performed in a standing position, enhancing balance, posture, and strength.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 91,
+            "id": 89,
             "name": "Fletcher Pilates",
             "description": "A Pilates method developed by Ron Fletcher, emphasizing breath, movement, and precision.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 92,
+            "id": 90,
             "name": "Classical Pilates",
             "description": "Traditional Pilates exercises following the original teachings of Joseph Pilates.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 93,
+            "id": 91,
             "name": "Contemporary Pilates",
             "description": "A modern approach to Pilates that incorporates variations and contemporary exercise principles.",
             "image": "",
             "category": "Pilates",
             "intensity": "Easy",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         },
         {
-            "id": 94,
+            "id": 92,
             "name": "Athletic Pilates",
             "description": "Pilates exercises adapted for athletes, focusing on strength, flexibility, and core stability.",
             "image": "",
             "category": "Pilates",
             "intensity": "Medium",
-            "duration": "45 minutes to 1 hour"
+            "duration": 55
         }        
     ]
 }

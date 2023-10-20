@@ -7,10 +7,10 @@ import WorkoutList from "../components/WorkoutList.vue";
 <template>
     <div class="container">
         <div class="columns">
-            <div class="column is-three-fifths">
+            <div class="column is-half">
                 <WorkoutList />
             </div>
-            <div class="column is-two-fifths">
+            <div class="column is-half">
                 <PersonalWorkouts />
             </div>
         </div>

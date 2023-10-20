@@ -7,7 +7,7 @@ export interface Workout {
     image: string
     category: string
     intensity: string
-    duration: string
+    duration: number
 }
 
 export function getWorkouts(): Workout[] {

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { getSession } from '@/models/session';
+import { getSession } from '@/models/session'
 import { type Workout } from '../models/workouts'
 import workoutsData from '../data/workouts.json'
-import { ref } from 'vue';
-import PostModal from './PostModal.vue';
-import { isModalActive, closeSuccessMessage, successMessage, openModal } from '@/models/postModal';
+import { ref } from 'vue'
+import PostModal from './PostModal.vue'
+import { isModalActive, closeSuccessMessage, successMessage, openModal } from '@/models/postModal'
 
 const session = getSession()
 const workout = ref<Workout | null>(null)
 
 function getWorkout(id: number) {
-    return workout.value = workoutsData.workouts.find((workout) => workout.id === id) || null;
+    return workout.value = workoutsData.workouts.find((workout) => workout.id === id) || null
 }
 
 </script>
@@ -47,4 +47,9 @@ function getWorkout(id: number) {
     <PostModal :class="{ 'is-active': isModalActive }" />
 </template>
 
-<style scoped></style>
+<style scoped>
+.message{
+    border: 2px solid #000;
+    border-radius: 5px;
+}
+</style>

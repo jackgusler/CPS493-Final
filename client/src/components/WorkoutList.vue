@@ -1,18 +1,26 @@
 <script setup lang="ts">
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { type Workout } from '../models/workouts'
 import workoutsData from '../data/workouts.json'
-import { getSession } from '@/models/session';
+import { getSession } from '@/models/session'
 
 const session = getSession()
 
-const activeTab = ref('All')
+const activeTab = ref('All');
 const workouts = ref<Workout[]>(workoutsData.workouts)
 const activeButton = ref<number>(workouts.value[0].id || 0)
 const selectedWorkout = ref<Workout | null>(workouts.value[0] || null)
-const inWorkouts = ref<boolean>(false)
+const searchQuery = ref('')
+
+const filteredWorkouts = computed(() => {
+    const query = searchQuery.value.toLowerCase()
+    return workouts.value.filter((workout) => {
+        return workout.name.toLowerCase().includes(query)
+    })
+})
 
 watch(activeTab, (newVal) => {
+    // Update the filtered workouts based on the activeTab selection
     if (newVal === 'All') {
         workouts.value = workoutsData.workouts
     } else if (newVal === 'Strength') {
@@ -33,20 +41,20 @@ function setActiveTab(tabName: string) {
 function toggle(workoutId: number) {
     if (activeButton.value !== workoutId) {
         activeButton.value = workoutId
-        selectedWorkout.value = workouts.value.find((workout) => workout.id === workoutId) || null;
+        selectedWorkout.value = workouts.value.find((workout) => workout.id === workoutId) || null
     }
 }
 
 function addToPersonalWorkouts(id: number) {
-    if (id == 0) {
+    if (id < 0) {
         return
     }
     if (session) {
         session.user?.workoutsByIds?.push(id)
     }
 }
-
 </script>
+
 
 <template>
     <div class="columns">
@@ -57,7 +65,7 @@ function addToPersonalWorkouts(id: number) {
                 </p>
                 <div class="panel-block">
                     <p class="control has-icons-left">
-                        <input class="input" type="text" placeholder="Search">
+                        <input class="input" type="text" placeholder="Search" v-model="searchQuery">
                         <span class="icon is-left">
                             <i class="fas fa-search" aria-hidden="true"></i>
                         </span>
@@ -72,7 +80,7 @@ function addToPersonalWorkouts(id: number) {
                 </p>
                 <div class="panel-block">
                     <div class="wrapper">
-                        <p v-for="workout in workouts" :key="workout.id" class="workouts">
+                        <p v-for="workout in filteredWorkouts" :key="workout.id" class="workouts">
                         <div class="button" :class="{ 'is-green': activeButton === workout.id }"
                             @click="toggle(workout.id)">
                             {{ workout.name }}

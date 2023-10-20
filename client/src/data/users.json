@@ -4,36 +4,40 @@
       "id": 0,
       "firstName": "John",
       "lastName": "Doe",
+      "username": "@johndoe",
       "email": "john@doe.com",
       "password": "test",
-      "role": "admin",
+      "admin": true,
       "workoutsByIds": [2, 3]
     },
     {
       "id": 1,
       "firstName": "test",
       "lastName": "user",
+      "username": "@testuser",
       "email": "test@user.com",
       "password": "test",
-      "role": "user",
+      "admin": false,
       "workoutsByIds": [23, 64]
     },
     {
       "id": 2,
       "firstName": "Barack",
       "lastName": "Obama",
+      "username": "@TheObama",
       "email": "obamab@potus.com",
       "password": "test",
-      "role": "user",
+      "admin": false,
       "workoutsByIds": [24, 49, 10]
     },
     {
       "id": 3,
       "firstName": "admin",
       "lastName": "admin",
+      "username": "@admin",
       "email": "admin@admin.com",
       "password": "admin",
-      "role": "admin",
+      "admin": true,
       "workoutsByIds": [2, 3, 4, 5, 6, 7, 8, 9]
     }
   ]

@@ -21,10 +21,13 @@ const doLogout = () => {
                     <div class="panel-block">
                         <div class="content">
                             <p>
+                                Username: {{ session.user?.username }}
+                            </p>
+                            <p>
                                 Email: {{ session.user?.email }}
                             </p>
                             <p>
-                                Role: {{ session.user?.role }}
+                                Admin: {{ session.user?.admin }}
                             </p>
                         </div>
                     </div>
