@@ -5,14 +5,14 @@
         "workoutId": 0,
         "picture": "https://picsum.photos/400/300",
         "description": "This is a test post",
-        "date": "2019-11-11T00:00:00.000Z"
+        "date": "10/11/2023"
       },
       {
         "userId": 2,
         "workoutId": 24,
         "picture": "https://picsum.photos/400/300",
         "description": "This is another test post",
-        "date": "2022-11-11T00:00:00.000Z"
+        "date": "9/1/2023"
       }
     ]
   }

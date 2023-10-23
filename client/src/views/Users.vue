@@ -27,7 +27,7 @@ function getWorkout(id: number) {
                             <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Role</th>
+                            <th>Is Admin</th>
                             <th>Workouts</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -38,7 +38,7 @@ function getWorkout(id: number) {
                             <td>{{ user.firstName }} {{ user.lastName }}</td>
                             <td>{{ user.username }}</td>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.role }}</td>
+                            <td>{{ user.admin }}</td>
                             <td>
                                 <div class="select is-full-width">
                                     <select class="form-control">
