@@ -1,15 +1,29 @@
-import data from '../data/posts.json';
-import type { Workout } from './workouts';
+import { api } from "./session";
+import type { Workout } from "./workouts";
 
 export interface Post {
-    id: number;
-    userId: number;
-    workoutId: number;
-    picture: string,
-    description: string;
-    date: string;
+  id: number;
+  userId: number;
+  workoutId: number;
+  picture: string;
+  description: string;
+  date: string;
 }
 
-export function getPosts(): Post[] {
-    return data.posts.map( x => ({ ...x }) )
+export async function getPosts(): Promise<Post[]> {
+  return await api("posts");
+}
+
+export function useMakePost() {
+  return {
+    async makePost(id: number, userId: number, workoutId: number, picture: string, description: string, date: string): Promise<Post | null> {
+      try {
+        const post = await api("posts/makepost", { id, userId, workoutId, picture, description, date }, "POST");
+        return post;
+      } catch (error) {
+        console.error("Error calling API:", error);
+      }
+      return null;
+    }
+  };
 }

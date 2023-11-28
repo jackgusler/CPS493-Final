@@ -1,5 +1,4 @@
-import data from '../data/workouts.json';
-
+import { api } from "./session"
 export interface Workout {
     id: number
     name: string
@@ -10,10 +9,10 @@ export interface Workout {
     duration: number
 }
 
-export function getWorkouts(): Workout[] {
-    return data.workouts.map( x => ({ ...x }) )
+export function getWorkouts(): Promise<Workout[]> {
+    return api("workouts")
 }
 
-export function getWorkoutsByName(name: string): Workout | undefined {
-    return getWorkouts().find(x => x.name === name )
+export function getWorkoutByName(name: string): Promise<Workout> {
+    return api(`workouts/name`, { name }, "GET")
 }

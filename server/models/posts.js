@@ -13,16 +13,14 @@
  * @property {Post[]} posts - The list of posts.
  */
 
-
-const { ObjectId, connect } = require('./mongo');
+const { ObjectId, connect } = require("./mongo");
 const data = require("../data/posts.json");
 
-const COLLECTION_NAME = 'posts';
+const COLLECTION_NAME = "Posts";
 async function getCollection() {
   const db = await connect();
   return db.collection(COLLECTION_NAME);
 }
-
 
 /**
  * @returns {Promise<post[]>} An array of posts.
@@ -42,12 +40,14 @@ async function get(id) {
 
 async function search(query) {
   const col = await getCollection();
-  const posts = await col.find({
-    $or: [
-      { workoutId: { $regex: query, $options: 'i' } },
-      { description: { $regex: query, $options: 'i' } },
-    ],
-  }).toArray();
+  const posts = await col
+    .find({
+      $or: [
+        { workoutId: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
+      ],
+    })
+    .toArray();
 
   return posts;
 }
@@ -58,12 +58,7 @@ async function search(query) {
  */
 async function create(post) {
   const col = await getCollection();
-  const result = await col.insertOne(
-    {
-      id: col.length + 1,
-      ...post,
-    }
-  );
+  const result = await col.insertOne(post);
   return result;
 }
 
@@ -72,12 +67,11 @@ async function create(post) {
  * @returns {post} The updated post.
  */
 async function update(post) {
-
   const col = await getCollection();
   const result = await col.findOneAndUpdate(
     { _id: ObjectId(post.id) },
     { $set: post },
-    { returnDocument: 'after' },
+    { returnDocument: "after" }
   );
   return result;
 }
@@ -88,8 +82,8 @@ async function update(post) {
 async function remove(id) {
   const col = await getCollection();
   const result = await col.deleteOne({ _id: ObjectId(id) });
-  if(result.deletedCount === 0) {
-    throw new Error('post not found');
+  if (result.deletedCount === 0) {
+    throw new Error("post not found");
   }
 }
 
@@ -99,7 +93,14 @@ async function seed() {
   await col.insertMany(data.posts);
 }
 
-
 module.exports = {
-  getAll, get, search, create, update, remove, getCollection, COLLECTION_NAME, seed
+  getAll,
+  get,
+  search,
+  create,
+  update,
+  remove,
+  getCollection,
+  COLLECTION_NAME,
+  seed,
 };

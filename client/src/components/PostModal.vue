@@ -2,8 +2,8 @@
 import { handleError, ref } from 'vue'
 import { type Workout } from '../models/workouts'
 import workoutsData from '../data/workouts.json'
-import { getSession, useMakePost } from '@/models/session'
-import { type Post } from '../models/posts'
+import { getSession } from '@/models/session'
+import { type Post, useMakePost, getPosts } from '../models/posts'
 import postData from '../data/posts.json'
 import { closeModal, openSuccessMessage } from '@/models/postModal'
 
@@ -30,21 +30,20 @@ function handleCloseModal() {
     openSuccessMessage()
 }
 
-const makeAPost = () => {
+const makeAPost = async () => {
     if (workoutChoice === -1 || description === '' || picture === '') {
         showDangerMessage.value = true
         return;
     }
     if (session) {
-        const post: Post = {
-            id: postData.posts.length + 1,
-            userId: session.user?.id || -1,
-            workoutId: workoutChoice,
-            picture: picture,
-            description: description,
-            date: new Date().toISOString()
-        }
-        makePost(post)
+        makePost(
+            (await getPosts()).length,
+            session.user?.id ?? -1,
+            workoutChoice,
+            picture,
+            description,
+            new Date().toLocaleDateString('en-US')
+        )
     }
     handleCloseModal()
 }

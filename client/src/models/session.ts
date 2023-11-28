@@ -43,15 +43,3 @@ export function useLogin(){
     }
   }
 }
-
-export function useMakePost(){
-  return {
-    async makePost(post: Post): Promise< Post | null> {
-      return await api("posts/makepost", post, "POST")
-    }
-  }
-}
-
-export async function getPosts(){
-  return;
-}

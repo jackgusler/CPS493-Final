@@ -1,18 +1,27 @@
 <script setup lang="ts">
-import { type Post } from '../models/posts'
+import { type Post, getPosts } from '../models/posts'
 import postData from '../data/posts.json'
 import userData from '../data/users.json'
 import { getSession } from '@/models/session'
 import workoutsData from '../data/workouts.json'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const session = getSession()
-let posts = ref<Post[]>(postData.posts)
-
-let userPosts = ref(posts.value.filter((post) => post.userId === session.user?.id))
-userPosts = ref(userPosts.value.slice().reverse())
+const posts = ref<Post[]>([])
+const userPosts = ref<Post[]>([])
 
 const searchQuery = ref('')
+
+const fetchPosts = async () => {
+    posts.value = await getPosts()
+    userPosts.value = posts.value.filter((post) => post.userId === session.user?.id).reverse()
+}
+
+fetchPosts()
+
+watch(() => session.user, () => {
+    userPosts.value = posts.value.filter((post) => post.userId === session.user?.id).reverse()
+})
 
 const filteredPosts = computed(() => {
   const query = searchQuery.value.toLowerCase()

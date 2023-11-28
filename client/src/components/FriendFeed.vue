@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { type Post } from '../models/posts'
-import postData from '../data/posts.json'
+import { getPosts, type Post } from '../models/posts'
 import userData from '../data/users.json'
 import { getSession } from '@/models/session'
 import workoutsData from '../data/workouts.json'
 import { computed, ref } from 'vue'
 
 const session = getSession()
-let posts = ref<Post[]>(postData.posts)
-posts = ref(posts.value.slice().reverse())
+const posts = ref<Post[]>([])
 
 const searchQuery = ref('')
+
+const fetchPosts = async () => {
+    posts.value = await getPosts()
+}
+
+fetchPosts()
 
 const filteredPosts = computed(() => {
   const query = searchQuery.value.toLowerCase()
