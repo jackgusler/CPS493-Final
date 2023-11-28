@@ -2,15 +2,15 @@
 import { handleError, ref } from 'vue'
 import { type Workout } from '../models/workouts'
 import workoutsData from '../data/workouts.json'
-import { getSession } from '@/models/session'
+import { getSession, useMakePost } from '@/models/session'
 import { type Post } from '../models/posts'
 import postData from '../data/posts.json'
 import { closeModal, openSuccessMessage } from '@/models/postModal'
 
 const session = getSession()
 const workout = ref<Workout | null>(null)
-const post = ref<Post | null>(null)
 const showDangerMessage = ref(false)
+const { makePost } = useMakePost()
 
 let workoutChoice = -1
 let description = ''
@@ -30,20 +30,21 @@ function handleCloseModal() {
     openSuccessMessage()
 }
 
-function makeAPost() {
+const makeAPost = () => {
     if (workoutChoice === -1 || description === '' || picture === '') {
         showDangerMessage.value = true
         return;
     }
     if (session) {
-        post.value = {
-            userId: session.user?.id || 0,
+        const post: Post = {
+            id: postData.posts.length + 1,
+            userId: session.user?.id || -1,
             workoutId: workoutChoice,
             picture: picture,
             description: description,
-            date: new Date().toLocaleDateString()
+            date: new Date().toISOString()
         }
-        postData.posts.push(post.value)
+        makePost(post)
     }
     handleCloseModal()
 }

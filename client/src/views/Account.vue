@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { getSession, login, logout } from "@/models/session";
+import { getSession, useLogin } from "@/models/session";
 import router from "@/router";
 
 const session = getSession();
+const { logout } = useLogin();
 
 const doLogout = () => {
     logout();
-    router.push("/login");
 }
 </script>
 

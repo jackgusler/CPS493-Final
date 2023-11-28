@@ -1,19 +1,20 @@
 {
-    "posts": [
-      {
-        "userId": 0,
-        "workoutId": 0,
-        "picture": "https://picsum.photos/400/300",
-        "description": "This is a test post",
-        "date": "10/11/2023"
-      },
-      {
-        "userId": 2,
-        "workoutId": 24,
-        "picture": "https://picsum.photos/400/300",
-        "description": "This is another test post",
-        "date": "9/1/2023"
-      }
-    ]
-  }
-  
+  "posts": [
+    {
+      "id": 0,
+      "userId": 0,
+      "workoutId": 0,
+      "picture": "https://picsum.photos/400/300",
+      "description": "This is a test post",
+      "date": "10/11/2023"
+    },
+    {
+      "id": 1,
+      "userId": 2,
+      "workoutId": 24,
+      "picture": "https://picsum.photos/400/300",
+      "description": "This is another test post",
+      "date": "9/1/2023"
+    }
+  ]
+}

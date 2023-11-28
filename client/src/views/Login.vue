@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { getSession, login, logout } from "@/models/session";
+import { getSession, useLogin } from "@/models/session";
 import router from "@/router";
 import { ref } from "vue";
 
 const session = getSession();
+const { login } = useLogin();
 let email = ""
 let password = ""
 
