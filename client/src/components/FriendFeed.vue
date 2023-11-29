@@ -12,6 +12,7 @@ const searchQuery = ref('')
 
 const fetchPosts = async () => {
     posts.value = await getPosts()
+    posts.value.reverse()
 }
 
 fetchPosts()

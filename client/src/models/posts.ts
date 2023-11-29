@@ -16,7 +16,7 @@ export async function getPosts(): Promise<Post[]> {
 
 export function useMakePost() {
   return {
-    async makePost(id: number, userId: number, workoutId: number, picture: string, description: string, date: string): Promise<Post | null> {
+    async makePost(id: number, userId: number, workoutId: number, picture: string, description: string, date: Date): Promise<Post | null> {
       try {
         const post = await api("posts/makepost", { id, userId, workoutId, picture, description, date }, "POST");
         return post;

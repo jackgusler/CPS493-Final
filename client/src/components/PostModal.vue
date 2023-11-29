@@ -4,7 +4,6 @@ import { type Workout } from '../models/workouts'
 import workoutsData from '../data/workouts.json'
 import { getSession } from '@/models/session'
 import { type Post, useMakePost, getPosts } from '../models/posts'
-import postData from '../data/posts.json'
 import { closeModal, openSuccessMessage } from '@/models/postModal'
 
 const session = getSession()
@@ -42,7 +41,7 @@ const makeAPost = async () => {
             workoutChoice,
             picture,
             description,
-            new Date().toLocaleDateString('en-US')
+            new Date()
         )
     }
     handleCloseModal()

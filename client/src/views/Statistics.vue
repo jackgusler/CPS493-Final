@@ -12,8 +12,6 @@ const fetchData= async () => {
   workoutData.value = await getWorkouts();
 };
 
-fetchData();
-
 const session = getSession();
 const today = new Date();
 const intensityValues: Record<string, number> = {
@@ -175,6 +173,8 @@ function isSameDay(date1: Date, date2: Date) {
     date1.getDate() === date2.getDate()
   );
 }
+
+fetchData();
 </script>
 
 <template>
