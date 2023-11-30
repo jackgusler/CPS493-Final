@@ -9,6 +9,7 @@ const {
   login,
   register,
 } = require("../models/users");
+const { requireUser } = require("../middleware/authorization");
 const router = express.Router();
 
 router
@@ -19,7 +20,7 @@ router
       })
       .catch(next);
   })
-  .get("/search", (req, res, next) => {
+  .get("/search", requireUser(), (req, res, next) => {
     search(req.query.q)
       .then((results) => {
         res.send(results);
@@ -37,7 +38,7 @@ router
       })
       .catch(next);
   })
-  .post("/signup", (req, res, next) => {
+  .post("/signup", requireUser(true), (req, res, next) => {
     create(req.body)
       .then((user) => {
         res.send(user);
@@ -58,14 +59,17 @@ router
       })
       .catch(next);
   })
-  .patch("/:id", (req, res, next) => {
+  .patch("/:id", requireUser(), (req, res, next) => {
+    if(req.user.id !== +req.params.id && !req.user.isAdmin) {
+      return next({ code: 403, message: "You can only edit your own account" })
+    }
     update(req.body)
       .then((user) => {
         res.send(user);
       })
       .catch(next);
   })
-  .delete("/:id", (req, res, next) => {
+  .delete("/:id", requireUser(true), (req, res, next) => {
     remove(+req.params.id)
       .then(() => {
         res.send({ message: "User removed" });

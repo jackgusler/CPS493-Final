@@ -18,9 +18,14 @@
 /**
  * @type { {users: User[]} }
  */
-const { ObjectId, connect } = require('./mongo');
+const { ObjectId, connect } = require("./mongo");
 
-const COLLECTION_NAME = 'Users';
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
+
+const COLLECTION_NAME = "Users";
 async function getCollection() {
   const db = await connect();
   return db.collection(COLLECTION_NAME);
@@ -39,19 +44,21 @@ async function getAll() {
  */
 async function get(id) {
   const col = await getCollection();
-  return await col.findOne({ _id: new ObjectId(id) });
+  return await col.findOne({ id: id });
 }
 
 async function search(query) {
   const col = await getCollection();
-  const users = await col.find({
-    $or: [
-      { firstName: { $regex: query, $options: 'i' } },
-      { lastName: { $regex: query, $options: 'i' } },
-      { username: { $regex: query, $options: 'i' } },
-      { email: { $regex: query, $options: 'i' } },
-    ],
-  }).toArray();
+  const users = await col
+    .find({
+      $or: [
+        { firstName: { $regex: query, $options: "i" } },
+        { lastName: { $regex: query, $options: "i" } },
+        { username: { $regex: query, $options: "i" } },
+        { email: { $regex: query, $options: "i" } },
+      ],
+    })
+    .toArray();
 
   return users;
 }
@@ -81,12 +88,12 @@ async function register(values) {
   // and some extra logic
   const col = await getCollection();
   const exists = await col.findOne({ username: values.username });
-  if(exists) {
-    throw new Error('Username already exists');
+  if (exists) {
+    throw new Error("Username already exists");
   }
 
-  if(values.password.length < 8) {
-    throw new Error('Password must be at least 8 characters');
+  if (values.password.length < 8) {
+    throw new Error("Password must be at least 8 characters");
   }
 
   // TODO: Make sure user is create with least privileges
@@ -107,14 +114,16 @@ async function register(values) {
  */
 async function login(email, password) {
   const col = await getCollection();
-  const user = await col.findOne({ email: email });
-  if(!user) {
-    throw new Error('User not found');
+  const item = await col.findOne({ email: email });
+  if (!item) {
+    throw new Error("User not found");
   }
-  if(user.password !== password) {
-    throw new Error('Incorrect password');
+  if (item.password !== password) {
+    throw new Error("Incorrect password");
   }
-  return user; 
+  const user = { ...item, password: undefined };
+  const token = await generateJWT(user);
+  return { user, token };
 }
 
 /**
@@ -125,7 +134,7 @@ async function update(newValues) {
   const col = await getCollection();
   const result = await col.findOneAndUpdate(
     { id: newValues.id },
-    { 
+    {
       $set: {
         firstName: newValues.firstName,
         lastName: newValues.lastName,
@@ -134,9 +143,9 @@ async function update(newValues) {
         password: newValues.password,
         admin: newValues.admin,
         workoutsByIds: newValues.workoutsByIds,
-      } 
+      },
     },
-    { returnDocument: 'after' },
+    { returnDocument: "after" }
   );
 
   return result;
@@ -147,13 +156,45 @@ async function update(newValues) {
  */
 async function remove(id) {
   const col = await getCollection();
-  const result = await col.deleteOne({ _id: ObjectId(id) });
-  if(result.deletedCount === 0) {
-    throw new Error('User not found');
+  const result = await col.deleteOne({ id: id });
+  if (result.deletedCount === 0) {
+    throw new Error("User not found");
   }
 }
 
+function generateJWT(user) {
+  return new Promise((resolve, reject) => {
+    jwt.sign(user, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN }, (err, token) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(token);
+      }
+    });
+  });
+}
+
+function verifyJWT(token) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(user);
+      }
+    });
+  });
+}
 
 module.exports = {
-  getAll, get, search, create, update, remove, login, register
+  getAll,
+  get,
+  search,
+  create,
+  register,
+  login,
+  update,
+  remove,
+  generateJWT,
+  verifyJWT,
 };

@@ -1,16 +1,21 @@
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 import * as myFetch from "./myFetch"
-import { type User, getUserByEmail } from "./users"
-import { type Post } from "./posts"
+import { type User } from "./users"
 
 const session = reactive({
   user: null as User | null,
+  token: null as string | null,
   redirectUrl: null as string | null,
 })
 
-export function api(action: string, body?: unknown, method?: string){
-  return myFetch.api(`${action}`, body, method)
+export function api(action: string, body?: unknown, method?: string, headers?: any){
+  if(session.token){
+    headers = headers ?? {}
+    headers["Authorization"] = `Bearer ${session.token}`
+  }
+
+  return myFetch.api(`${action}`, body, method, headers)
     .catch(err=> showError(err))
 }
 

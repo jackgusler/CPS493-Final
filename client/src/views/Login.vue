@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useLogin, useSignUp } from '@/models/session';
-import { checkIfUserExists, getUserByEmail } from '@/models/users';
+import { checkIfUserExistsByEmail, checkIfUserExistsByUsername, getUserByEmail } from '@/models/users';
 
 const { login } = useLogin();
 const { signUp } = useSignUp();
@@ -20,7 +20,7 @@ const isLoginSubmitted = ref(false);
 const isSignUpSubmitted = ref(false);
 
 async function validateLogin() {
-  const userCheck = await checkIfUserExists(email.value);
+  const userCheck = await checkIfUserExistsByEmail(email.value);
   if(userCheck === undefined) {
     errorMessage.value = 'That email does not exist. Please sign up or try again.';
     return false;
@@ -40,8 +40,18 @@ async function validateLogin() {
 
 async function validateSignUp() {
   if (isSignUp.value) {
-    if (signUpFirstName.value.length < 0 && signUpLastName.value.length < 0) {
-      errorMessage.value = 'Name must be at least 3 characters long.';
+    if (signUpFirstName.value.length < 1 || signUpLastName.value.length < 1) {
+      errorMessage.value = 'First and last name must not be empty.';
+      return false;
+    }
+    //username check, must be at least 2 characters long, and can't be taken
+    if (signUpUsername.value.length < 2) {
+      errorMessage.value = 'Username must be at least 2 characters long.';
+      return false;
+    }
+    const usernameCheck = await checkIfUserExistsByUsername(signUpUsername.value);
+    if (usernameCheck !== false) {
+      errorMessage.value = 'That username is already taken.';
       return false;
     }
     const emailRegex = /\S+@\S+\.\S+/;

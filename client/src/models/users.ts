@@ -27,9 +27,9 @@ export async function getUserByEmail(email: string): Promise<User | undefined> {
     }
 }
 
-export function checkIfUserExists(email: string): Promise<boolean> {
+export async function checkIfUserExistsByEmail(email: string): Promise<boolean> {
     try{
-        const user = getUserByEmail(email)
+        const user = await getUserByEmail(email)
         if(user != undefined){
             return true
         } else {
@@ -38,6 +38,23 @@ export function checkIfUserExists(email: string): Promise<boolean> {
     }
     catch(error){
         console.error("Error calling API:", error);
+        return false
+    }
+}
+
+export async function checkIfUserExistsByUsername(username: string): Promise<boolean> {
+    try{
+        const users = await getUsers()
+        const user = users.find((user) => user.username === username)
+        if(user != undefined){
+            return true
+        } else {
+            return false
+        }
+    }
+    catch(error){
+        console.error("Error calling API:", error);
+        return false
     }
 }
 

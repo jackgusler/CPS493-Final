@@ -34,7 +34,7 @@ async function getAll() {
  */
 async function get(id) {
   const col = await getCollection();
-  return await col.findOne({ _id: ObjectId(id) });
+  return await col.findOne({ id: id });
 }
 
 async function search(query) {

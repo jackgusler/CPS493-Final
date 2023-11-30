@@ -6,6 +6,7 @@ require('dotenv').config();
 const workoutController = require('./controllers/workouts');
 const userController = require('./controllers/users');
 const postController = require('./controllers/posts');
+const { parseAuthorizationToken, requireUser } = require('./middleware/authorization');
 const app = express();
 
 const PORT = process.env.PORT ?? 3000;
@@ -19,12 +20,17 @@ app
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', '*');
         res.header('Access-Control-Allow-Headers', '*');
+        if(req.method === 'OPTIONS') {
+            return res.send(200);
+        }
         next();
     })
 
-    .use('/api/v1/workouts', workoutController)
+    .use(parseAuthorizationToken)
+
+    .use('/api/v1/workouts', requireUser(), workoutController)
     .use('/api/v1/users', userController)
-    .use('/api/v1/posts', postController)
+    .use('/api/v1/posts', requireUser(), postController)
 
     .get('*', (req, res) => {
         res.sendFile(path.join( __dirname, '../client/dist/index.html') )
