@@ -7,10 +7,19 @@ import { onMounted, ref } from "vue";
 const postData = ref<Post[]>([]);
 const workoutData = ref<Workout[]>([]);
 
-const fetchData= async () => {
-  postData.value = await getPosts();
-  workoutData.value = await getWorkouts();
-};
+let workoutsToday = ref(0);
+let durationToday = ref(0);
+let highestIntensityToday = ref("");
+let highestDurationToday = ref(0);
+let workoutsThisWeek = ref(0);
+let durationThisWeek = ref(0);
+let highestIntensityThisWeek = ref("");
+let highestDurationThisWeek = ref(0);
+let workoutsAllTime = ref(0);
+let durationAllTime = ref(0);
+let highestIntensityAllTime = ref("");
+let highestDurationAllTime = ref(0);
+
 
 const session = getSession();
 const today = new Date();
@@ -25,146 +34,158 @@ startOfWeek.setDate(today.getDate() - today.getDay());
 const endOfWeek = new Date(today);
 endOfWeek.setDate(today.getDate() + (6 - today.getDay()));
 
-const workoutsToday = postData.value.filter((post: Post) => {
-  const postDate = new Date(post.date);
-  return post.userId === session.user?.id && isSameDay(postDate, today);
-}).length;
-const durationToday = postData.value
-  .filter((post: Post) => {
-    const postDate = new Date(post.date);
-    return post.userId === session.user?.id && isSameDay(postDate, today);
-  })
-  .reduce((total: number, post: Post) => {
-    const postWorkoutId = post.workoutId;
-    const workout = workoutData.value[postWorkoutId];
-    if (workout && typeof workout.duration === "number") {
-      return total + workout.duration;
-    }
-    return total;
-  }, 0);
-const highestIntensityToday = postData.value
-  .filter((post: Post) => {
-    const postDate = new Date(post.date);
-    return post.userId === session.user?.id && isSameDay(postDate, today);
-  })
-  .reduce((highest: string, post: Post) => {
-    const intensity = workoutData.value[post.workoutId].intensity;
-    const currentIntensityValue = intensityValues[intensity];
-    if (currentIntensityValue > intensityValues[highest]) {
-      return intensity;
-    } else {
-      return highest;
-    }
-  }, "None");
-const highestDurationToday = postData.value
-  .filter((post: Post) => {
-    const postDate = new Date(post.date);
-    return post.userId === session.user?.id && isSameDay(postDate, today);
-  })
-  .reduce((highest: number, post: Post) => {
-    const duration = workoutData.value[post.workoutId].duration;
-    if (duration > highest) {
-      return duration;
-    } else {
-      return highest;
-    }
-  }, 0);
+const fetchData = async () => {
+  postData.value = await getPosts();
+  workoutData.value = await getWorkouts();
 
-const workoutsThisWeek = postData.value.filter((post: Post) => {
-  const postDate = new Date(post.date);
-  return (
-    post.userId === session.user?.id &&
-    postDate >= startOfWeek &&
-    postDate <= endOfWeek
-  );
-}).length;
-const durationThisWeek = postData.value
-  .filter((post: Post) => {
+  //----------------Today----------------//
+  workoutsToday.value = postData.value.filter((post: Post) => {
     const postDate = new Date(post.date);
-    return (
-      post.userId === session.user?.id &&
-      postDate >= startOfWeek &&
-      postDate <= endOfWeek
-    );
-  })
-  .reduce((total: number, post: Post) => {
-    const postWorkoutId = post.workoutId;
-    const workout = workoutData.value[postWorkoutId];
-    if (workout && typeof workout.duration === "number") {
-      return total + workout.duration;
-    }
-    return total;
-  }, 0);
-const highestIntensityThisWeek = postData.value
-  .filter((post: Post) => {
-    const postDate = new Date(post.date);
-    return (
-      post.userId === session.user?.id &&
-      postDate >= startOfWeek &&
-      postDate <= endOfWeek
-    );
-  })
-  .reduce((highest: string, post: Post) => {
-    const intensity = workoutData.value[post.workoutId].intensity;
-    const currentIntensityValue = intensityValues[intensity];
-    if (currentIntensityValue > intensityValues[highest]) {
-      return intensity;
-    } else {
-      return highest;
-    }
-  }, "None");
-const highestDurationThisWeek = postData.value
-  .filter((post: Post) => {
-    const postDate = new Date(post.date);
-    return (
-      post.userId === session.user?.id &&
-      postDate >= startOfWeek &&
-      postDate <= endOfWeek
-    );
-  })
-  .reduce((highest: number, post: Post) => {
-    const duration = workoutData.value[post.workoutId].duration;
-    if (duration > highest) {
-      return duration;
-    } else {
-      return highest;
-    }
-  }, 0);
+    return post.userId === session.user?.id && isSameDay(postDate, today);
+  }).length;
+  durationToday.value = postData.value
+    .filter((post: Post) => {
+      const postDate = new Date(post.date);
+      return post.userId === session.user?.id && isSameDay(postDate, today);
+    })
+    .reduce((total: number, post: Post) => {
+      const postWorkoutId = post.workoutId;
+      const workout = workoutData.value[postWorkoutId];
+      if (workout && typeof workout.duration === "number") {
+        return total + workout.duration;
+      }
+      return total;
+    }, 0);
+  highestIntensityToday.value = postData.value
+    .filter((post: Post) => {
+      const postDate = new Date(post.date);
+      return post.userId === session.user?.id && isSameDay(postDate, today);
+    })
+    .reduce((highest: string, post: Post) => {
+      const intensity = workoutData.value[post.workoutId].intensity;
+      const currentIntensityValue = intensityValues[intensity];
+      if (currentIntensityValue > intensityValues[highest]) {
+        return intensity;
+      } else {
+        return highest;
+      }
+    }, "None");
+  highestDurationToday.value = postData.value
+    .filter((post: Post) => {
+      const postDate = new Date(post.date);
+      return post.userId === session.user?.id && isSameDay(postDate, today);
+    })
+    .reduce((highest: number, post: Post) => {
+      const duration = workoutData.value[post.workoutId].duration;
+      if (duration > highest) {
+        return duration;
+      } else {
+        return highest;
+      }
+    }, 0);
 
-const workoutsAllTime = postData.value.filter(
-  (post: Post) => post.userId === session.user?.id
-).length;
-const durationAllTime = postData.value
-  .filter((post: Post) => post.userId === session.user?.id)
-  .reduce((total: number, post: Post) => {
-    const postWorkoutId = post.workoutId;
-    const workout = workoutData.value[postWorkoutId];
-    if (workout && typeof workout.duration === "number") {
-      return total + workout.duration;
-    }
-    return total;
-  }, 0);
-const highestIntensityAllTime = postData.value
-  .filter((post: Post) => post.userId === session.user?.id)
-  .reduce((highest: string, post: Post) => {
-    const intensity = workoutData.value[post.workoutId].intensity;
-    const currentIntensityValue = intensityValues[intensity];
-    if (currentIntensityValue > intensityValues[highest]) {
-      return intensity;
-    } else {
-      return highest;
-    }
-  }, "None");
-const highestDurationAllTime = postData.value
-  .filter((post: Post) => post.userId === session.user?.id)
-  .reduce((highest: number, post: Post) => {
-    const duration = workoutData.value[post.workoutId].duration;
-    if (duration > highest) {
-      return duration;
-    } else {
-      return highest;
-    }
-  }, 0);
+  //----------------This Week----------------//
+  workoutsThisWeek.value = postData.value.filter((post: Post) => {
+    const postDate = new Date(post.date);
+    return (
+      post.userId === session.user?.id &&
+      postDate >= startOfWeek &&
+      postDate <= endOfWeek
+    );
+  }).length;
+  durationThisWeek.value = postData.value
+    .filter((post: Post) => {
+      const postDate = new Date(post.date);
+      return (
+        post.userId === session.user?.id &&
+        postDate >= startOfWeek &&
+        postDate <= endOfWeek
+      );
+    })
+    .reduce((total: number, post: Post) => {
+      const postWorkoutId = post.workoutId;
+      const workout = workoutData.value[postWorkoutId];
+      if (workout && typeof workout.duration === "number") {
+        return total + workout.duration;
+      }
+      return total;
+    }, 0);
+  highestIntensityThisWeek.value = postData.value
+    .filter((post: Post) => {
+      const postDate = new Date(post.date);
+      return (
+        post.userId === session.user?.id &&
+        postDate >= startOfWeek &&
+        postDate <= endOfWeek
+      );
+    })
+    .reduce((highest: string, post: Post) => {
+      const intensity = workoutData.value[post.workoutId].intensity;
+      const currentIntensityValue = intensityValues[intensity];
+      if (currentIntensityValue > intensityValues[highest]) {
+        return intensity;
+      } else {
+        return highest;
+      }
+    }, "None");
+  highestDurationThisWeek.value = postData.value
+    .filter((post: Post) => {
+      const postDate = new Date(post.date);
+      return (
+        post.userId === session.user?.id &&
+        postDate >= startOfWeek &&
+        postDate <= endOfWeek
+      );
+    })
+    .reduce((highest: number, post: Post) => {
+      const duration = workoutData.value[post.workoutId].duration;
+      if (duration > highest) {
+        return duration;
+      } else {
+        return highest;
+      }
+    }, 0);
+
+  //----------------All Time----------------//
+  workoutsAllTime.value = postData.value.filter(
+    (post: Post) => post.userId === session.user?.id
+  ).length;
+  durationAllTime.value = postData.value
+    .filter((post: Post) => post.userId === session.user?.id)
+    .reduce((total: number, post: Post) => {
+      const postWorkoutId = post.workoutId;
+      const workout = workoutData.value[postWorkoutId];
+      if (workout && typeof workout.duration === "number") {
+        return total + workout.duration;
+      }
+      return total;
+    }, 0);
+  highestIntensityAllTime.value = postData.value
+    .filter((post: Post) => post.userId === session.user?.id)
+    .reduce((highest: string, post: Post) => {
+      const intensity = workoutData.value[post.workoutId].intensity;
+      const currentIntensityValue = intensityValues[intensity];
+      if (currentIntensityValue > intensityValues[highest]) {
+        return intensity;
+      } else {
+        return highest;
+      }
+    }, "None");
+  highestDurationAllTime.value = postData.value
+    .filter((post: Post) => post.userId === session.user?.id)
+    .reduce((highest: number, post: Post) => {
+      const duration = workoutData.value[post.workoutId].duration;
+      if (duration > highest) {
+        return duration;
+      } else {
+        return highest;
+      }
+    }, 0);
+};
+
+onMounted(() => {
+  fetchData();
+});
 
 function isSameDay(date1: Date, date2: Date) {
   return (
@@ -173,8 +194,6 @@ function isSameDay(date1: Date, date2: Date) {
     date1.getDate() === date2.getDate()
   );
 }
-
-fetchData();
 </script>
 
 <template>

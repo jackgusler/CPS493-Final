@@ -19,7 +19,6 @@
  * @type { {users: User[]} }
  */
 const { ObjectId, connect } = require('./mongo');
-const data = require("../data/users.json");
 
 const COLLECTION_NAME = 'Users';
 async function getCollection() {
@@ -28,7 +27,7 @@ async function getCollection() {
 }
 
 /**
- * @returns {User[]} An array of users.
+ * @returns {Promise<User[]>} An array of users.
  */
 async function getAll() {
   const col = await getCollection();
@@ -40,7 +39,7 @@ async function getAll() {
  */
 async function get(id) {
   const col = await getCollection();
-  return await col.findOne({ _id: ObjectId(id) });
+  return await col.findOne({ _id: new ObjectId(id) });
 }
 
 async function search(query) {
@@ -62,8 +61,9 @@ async function search(query) {
  * @returns {User} The created user.
  */
 async function create(values) {
+  const users = await getAll();
   const newUser = {
-    id: data.users.length + 1,
+    id: users.length,
     ...values,
   };
   const col = await getCollection();
@@ -124,8 +124,18 @@ async function login(email, password) {
 async function update(newValues) {
   const col = await getCollection();
   const result = await col.findOneAndUpdate(
-    { _id: ObjectId(newValues.id) },
-    { $set: newValues },
+    { id: newValues.id },
+    { 
+      $set: {
+        firstName: newValues.firstName,
+        lastName: newValues.lastName,
+        username: newValues.username,
+        email: newValues.email,
+        password: newValues.password,
+        admin: newValues.admin,
+        workoutsByIds: newValues.workoutsByIds,
+      } 
+    },
     { returnDocument: 'after' },
   );
 

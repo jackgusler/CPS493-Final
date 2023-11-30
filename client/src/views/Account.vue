@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getSession, useLogin } from "@/models/session";
-import router from "@/router";
+import { computed } from "vue";
 
 const session = getSession();
 const { logout } = useLogin();
@@ -8,6 +8,10 @@ const { logout } = useLogin();
 const doLogout = () => {
     logout();
 }
+
+const blockedPassword = computed(() => {
+    return session.user?.password.replace(/./g, '*');
+});
 </script>
 
 <template>
@@ -15,19 +19,48 @@ const doLogout = () => {
         <div class="columns">
             <div class="column is-half is-offset-one-quarter">
                 <div class="panel">
-                    <p class="panel-heading">
+                    <p class="panel-heading is-center">
                         Welcome {{ session.user?.firstName }} {{ session.user?.lastName }}!
                     </p>
                     <div class="panel-block">
                         <div class="content">
                             <p>
-                                Username: {{ session.user?.username }}
+                                First Name: {{ session.user?.firstName }}
                             </p>
+                        </div>
+                    </div>
+                    <div class="panel-block">
+                        <div class="content">
+                            <p>
+                                Last Name: {{ session.user?.lastName }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="panel-block">
+                        <div class="content">
+                            <p>
+                                Username: @{{ session.user?.username }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="panel-block">
+                        <div class="content">
                             <p>
                                 Email: {{ session.user?.email }}
                             </p>
+                        </div>
+                    </div>
+                    <div class="panel-block">
+                        <div class="content">
                             <p>
-                                Admin: {{ session.user?.admin }}
+                                Password: {{ blockedPassword }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="panel-block" v-if="session.user?.admin">
+                        <div class="content">
+                            <p>
+                                Admin: true
                             </p>
                         </div>
                     </div>
@@ -42,4 +75,8 @@ const doLogout = () => {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.is-center{
+    text-align: center;
+}
+</style>

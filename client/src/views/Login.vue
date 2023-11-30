@@ -1,82 +1,189 @@
 <script setup lang="ts">
-import { getSession, useLogin } from "@/models/session";
-import router from "@/router";
-import { ref } from "vue";
+import { ref } from 'vue';
+import { useLogin, useSignUp } from '@/models/session';
+import { checkIfUserExists, getUserByEmail } from '@/models/users';
 
-const session = getSession();
 const { login } = useLogin();
-let email = ""
-let password = ""
+const { signUp } = useSignUp();
 
-const doLogin = () => {
-  //login with the email and password from the form
-  login(email, password);
-  router.push("/");
-};
+const email = ref('');
+const password = ref('');
+const signUpFirstName = ref('');
+const signUpLastName = ref('');
+const signUpUsername = ref('');
+const signUpEmail = ref('');
+const signUpPassword = ref('');
+const signUpPassword2 = ref('');
+const isSignUp = ref(false);
+const errorMessage = ref('');
+const isLoginSubmitted = ref(false);
+const isSignUpSubmitted = ref(false);
 
+async function validateLogin() {
+  const userCheck = await checkIfUserExists(email.value);
+  if(userCheck === undefined) {
+    errorMessage.value = 'That email does not exist. Please sign up or try again.';
+    return false;
+  }
+  const user = await getUserByEmail(email.value);
+  if (email.value === '' || password.value === '') {
+    errorMessage.value = 'Email and password cannot be empty.';
+    return false;
+    /*check if account exists in database by email and password*/
+  } else if (!user || user?.password !== password.value) {
+    errorMessage.value = 'That email or password does not exist. Please sign up or try again.';
+    return false;
+  }
+  errorMessage.value = '';
+  return true;
+}
+
+async function validateSignUp() {
+  if (isSignUp.value) {
+    if (signUpFirstName.value.length < 0 && signUpLastName.value.length < 0) {
+      errorMessage.value = 'Name must be at least 3 characters long.';
+      return false;
+    }
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(signUpEmail.value)) {
+      errorMessage.value = 'Email must be valid.';
+      return false;
+    }
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    if (!passwordRegex.test(signUpPassword.value)) {
+      errorMessage.value = 'Password must be at least 8 characters long and contain at least one uppercase letter and one symbol.';
+      return false;
+    }
+    if (signUpPassword.value !== signUpPassword2.value) {
+      errorMessage.value = 'Passwords do not match.';
+      return false;
+    }
+  }
+  errorMessage.value = '';
+  return true;
+}
+
+const doLogin = async () => {
+  if (!(await validateLogin())) {
+    isLoginSubmitted.value = true;
+    return;
+  }
+  isLoginSubmitted.value = false;
+  login(email.value, password.value);
+}
+
+const doSignUp = async () => {
+  isSignUpSubmitted.value = true;
+  if (!(await validateSignUp())) return;
+  isSignUpSubmitted.value = false;
+  signUp(
+    signUpFirstName.value,
+    signUpLastName.value,
+    signUpUsername.value,
+    signUpEmail.value,
+    signUpPassword.value,
+  )
+}
+
+function toggleSignUp() {
+  email.value = '';
+  password.value = '';
+  signUpFirstName.value = '';
+  signUpLastName.value = '';
+  signUpUsername.value = '';
+  signUpEmail.value = '';
+  signUpPassword.value = '';
+  signUpPassword2.value = '';
+  errorMessage.value = '';
+  isLoginSubmitted.value = false;
+  isSignUpSubmitted.value = false;
+  isSignUp.value = !isSignUp.value;
+}
 </script>
 
 <template>
   <div class="container">
-  <div class="columns">
-    <div class="column is-half is-offset-one-quarter">
-      <div class="panel">
-        <p class="panel-heading">
-          Login
+    <div class="panel">
+      <p class="panel-heading is-centered">
+        {{ isSignUp ? 'Sign Up' : 'Login' }}
+      <div class="button is-green" @click="toggleSignUp">{{ isSignUp ? 'Go to Login' : 'Go to Sign Up' }}</div>
       </p>
-        <div class="panel-block">
-            <div class="field">
-              <label class="label">Email</label>
-              <div class="control">
-                <input
-                  v-model="email"
-                  class="input"
-                  type="email"
-                  placeholder="Email"
-                />
-              </div>
-              </div>
+      <div class="form">
+        <form v-if="!isSignUp">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="text" v-model="email">
             </div>
-            <div class="panel-block">
-            <div class="field">
-              <label class="label">Password</label>
-              <div class="control">
-                <input
-                  v-model="password"
-                  class="input"
-                  type="password"
-                  placeholder="Password"
-                />
-              </div>
-              </div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input class="input" type="password" v-model="password">
             </div>
-            <div class="panel-block">
-            <div class="field">
-              <div class="control">
-                <div
-                  type="submit"
-                  class="button"
-                  @click.prevent="doLogin"
-                >
-                  Login
-                </div>
-              </div>
+          </div>
+          <div class="field">
+            <div class="message is-danger" v-if="isLoginSubmitted">
+              <div class="message-body">{{ errorMessage }}</div>
             </div>
-        </div>
+          </div>
+          <div class="button is-green" @click="doLogin">Login</div>
+        </form>
+        <form v-else>
+          <div class="field">
+            <label class="label">First Name</label>
+            <div class="control">
+              <input class="input" type="text" v-model="signUpFirstName">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Last Name</label>
+            <div class="control">
+              <input class="input" type="text" v-model="signUpLastName">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+              <input class="input" type="text" v-model="signUpUsername">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="text" v-model="signUpEmail">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input class="input" type="password" v-model="signUpPassword">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Confirm Password</label>
+            <div class="control">
+              <input class="input" type="password" v-model="signUpPassword2">
+            </div>
+          </div>
+          <div class="field">
+            <div class="message is-danger" v-if="isSignUpSubmitted">
+              <div class="message-body">{{ errorMessage }}</div>
+            </div>
+          </div>
+          <div class="button is-green" @click="doSignUp">Sign Up</div>
+        </form>
       </div>
     </div>
   </div>
-</div>
 </template>
-
 <style scoped>
-input, .control, .field {
-    border-radius: 10px;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
+.is-centered {
+  text-align: center;
+  justify-content: center;
 }
-.panel-block{
-  border: none;
+
+.form {
+  padding: 1rem;
 }
 </style>

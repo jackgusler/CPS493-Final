@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { handleError, ref } from 'vue'
-import { type Workout } from '../models/workouts'
-import workoutsData from '../data/workouts.json'
+import { ref } from 'vue'
+import { getWorkouts, type Workout } from '../models/workouts'
 import { getSession } from '@/models/session'
-import { type Post, useMakePost, getPosts } from '../models/posts'
+import { useMakePost, getPosts } from '../models/posts'
 import { closeModal, openSuccessMessage } from '@/models/postModal'
 
 const session = getSession()
-const workout = ref<Workout | null>(null)
+const workoutsData = ref<Workout[]>([])
 const showDangerMessage = ref(false)
 const { makePost } = useMakePost()
 
@@ -15,8 +14,12 @@ let workoutChoice = -1
 let description = ''
 let picture = ''
 
+const fetchData = async () => {
+    workoutsData.value = await getWorkouts()
+}
+
 function getWorkout(id: number) {
-    return workout.value = workoutsData.workouts.find((workout) => workout.id === id) || null
+    return workoutsData.value.find((workout) => workout.id === id) || null
 }
 
 function closeMessage() {
@@ -47,6 +50,15 @@ const makeAPost = async () => {
     handleCloseModal()
 }
 
+function cancelPost() {
+    workoutChoice = -1
+    description = ''
+    picture = ''
+    closeModal()
+    closeMessage()
+}
+
+fetchData()
 </script>
 
 <template>
@@ -57,7 +69,6 @@ const makeAPost = async () => {
                 <p class="modal-card-title">
                     Make A Post!
                 </p>
-                <div class="delete" aria-label="close" @click="closeModal"></div>
             </header>
             <section class="modal-card-body">
                 <div class="field">
@@ -112,10 +123,10 @@ const makeAPost = async () => {
                 </div>
             </section>
             <footer class="modal-card-foot">
-                <div class="button is-success" @click="makeAPost">
+                <div class="button" @click="makeAPost">
                     Post
                 </div>
-                <div class="button" @click="closeModal">
+                <div class="button" @click="cancelPost">
                     Cancel
                 </div>
             </footer>

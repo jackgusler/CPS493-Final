@@ -1,35 +1,31 @@
 <script setup lang="ts">
-import { type Post, getPosts } from '../models/posts'
-import postData from '../data/posts.json'
-import userData from '../data/users.json'
-import { getSession } from '@/models/session'
-import workoutsData from '../data/workouts.json'
 import { ref, computed, watch } from 'vue'
-
-const session = getSession()
-const posts = ref<Post[]>([])
-const userPosts = ref<Post[]>([])
+import DeletePostModalVue from './DeletePostModal.vue';
+import { isModalActive, openModal, fetchUserData, postsData, usersPosts, workoutsData, usersData, session } from '@/models/deletePostModal';
 
 const searchQuery = ref('')
 
-const fetchPosts = async () => {
-    posts.value = await getPosts()
-    userPosts.value = posts.value.filter((post) => post.userId === session.user?.id).reverse()
-}
-
-fetchPosts()
-
 watch(() => session.user, () => {
-    userPosts.value = posts.value.filter((post) => post.userId === session.user?.id).reverse()
+    usersPosts.value = postsData.value.filter((post) => post.userId === session.user?.id)
 })
 
 const filteredPosts = computed(() => {
-  const query = searchQuery.value.toLowerCase()
-  return userPosts.value.filter((post) => {
-    const workoutName = workoutsData.workouts[post.workoutId].name.toLowerCase()
-    return workoutName.includes(query)
-  })
+    const query = searchQuery.value.toLowerCase()
+    return usersPosts.value.filter((post) => {
+        const workoutName = workoutsData.value[post.workoutId] ? workoutsData.value[post.workoutId].name.toLowerCase() : '';
+        return workoutName.includes(query)
+    })
 })
+
+function formatDate(dateString: string) {
+    const date = new Date(dateString)
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const year = date.getFullYear()
+    return `${month}/${day}/${year}`
+}
+
+fetchUserData()
 </script>
 
 <template>
@@ -50,8 +46,8 @@ const filteredPosts = computed(() => {
                 <div :class="{ 'is-right': post.userId === session.user?.id }">
                     <div class="panel-block is-right">
                         <div class="card">
-                            <p class="user">
-                                {{ userData.users[post.userId].username }}
+                            <p class="username">
+                                {{ usersData[post.userId] ? usersData[post.userId].username : '' }}
                             </p>
                             <div class="card-image">
                                 <figure class="image is-4by3">
@@ -62,19 +58,27 @@ const filteredPosts = computed(() => {
                                 <div class="media">
                                     <div class="media-content">
                                         <p class="title is-4">
-                                            {{ userData.users[post.userId].firstName }} {{
-                                                userData.users[post.userId].lastName }}
+                                            {{ usersData[post.userId] ? usersData[post.userId].firstName : '' }} {{
+                                                usersData[post.userId] ? usersData[post.userId].lastName : '' }}
                                         <p class="subtitle is-6">
-                                            {{ workoutsData.workouts[post.workoutId].name }}
+                                            {{ workoutsData[post.workoutId] ? workoutsData[post.workoutId].name : '' }}
                                         </p>
                                         </p>
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="content">
+                                <div class="content is-fullwidth">
                                     {{ post.description }}
                                     <hr>
-                                    <time>{{ post.date }}</time>
+                                    <!--post.date but in MM/DD/YYYY-->
+                                    <time>
+                                        {{ formatDate(post.date) }}
+                                        <div class="button is-trash" @click="openModal(post.id)">
+                                            <span class="icon">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </div>
+                                    </time>
                                 </div>
                             </div>
                         </div>
@@ -83,6 +87,7 @@ const filteredPosts = computed(() => {
             </div>
         </div>
     </nav>
+    <DeletePostModalVue :class="{ 'is-active': isModalActive }" />
 </template>
 
 
@@ -99,7 +104,7 @@ const filteredPosts = computed(() => {
     max-height: 84vh;
 }
 
-.user {
+.username {
     font-size: 15px;
     font-weight: bold;
     text-align: center;
@@ -109,7 +114,11 @@ const filteredPosts = computed(() => {
 .card {
     border: 2px solid black;
 }
+
 .panel-block {
     justify-content: right;
+}
+.button.is-trash {
+    width: 10%;
 }
 </style>

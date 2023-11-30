@@ -7,6 +7,9 @@ for some reason this ^^^^ is not working*/
 * {
   font-family: "Montserrat", sans-serif;
 }
+input, option, select {
+  font-family: "Montserrat", sans-serif;
+}
 body {
   min-height: 100vh;
   margin: 0;
@@ -55,7 +58,7 @@ header {
 }
 
 .button.is-green {
-  background-color: #00ff00;
+  background: linear-gradient(to right, #ffffff, #00ff00, #ffffff);
   border: 1px solid #000000;
   border-radius: 5px;
 }

@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import Workouts from '../data/workouts.json'
+import { getWorkouts, type Workout } from '@/models/workouts';
+import { ref } from 'vue';
 
+const workoutsData = ref<Workout[]>([]);
+
+const fetchData = async () => {
+    workoutsData.value = await getWorkouts();
+};
+
+fetchData();
 </script>
 
 <template>
@@ -25,7 +33,7 @@ import Workouts from '../data/workouts.json'
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="workout in Workouts.workouts" :key="workout.id">
+                            <tr v-for="workout in workoutsData" :key="workout.id">
                                 <td>{{ workout.name }}</td>
                                 <td>{{ workout.description }}</td>
                                 <td>{{ workout.image }}</td>

@@ -34,7 +34,29 @@ export function useLogin(){
       } catch (error) {
         console.error('Error calling API:', error);
       }
-      router.push(session.redirectUrl || "/")
+      router.push(session.redirectUrl ?? "/")
+      return session.user
+    },
+    logout(){
+      session.user = null
+      router.push("/login")
+    }
+  }
+}
+
+export function useSignUp(){
+  const router = useRouter()
+  return {
+    async signUp(firstName: string, lastName: string, username: string, email: string, password: string): Promise<User | null> {
+      try {
+        session.user = await api("users/signup", { firstName, lastName, username, email, password, admin: false, workoutsByIds: [] })
+        if (!session.user) {
+          console.log('No user returned from API');
+        }
+      } catch (error) {
+        console.error('Error calling API:', error);
+      }
+      router.push(session.redirectUrl ?? "/")
       return session.user
     },
     logout(){

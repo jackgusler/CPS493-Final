@@ -14,7 +14,6 @@
  */
 
 const { ObjectId, connect } = require("./mongo");
-const data = require("../data/posts.json");
 
 const COLLECTION_NAME = "Posts";
 async function getCollection() {
@@ -23,7 +22,7 @@ async function getCollection() {
 }
 
 /**
- * @returns {Promise<post[]>} An array of posts.
+ * @returns {Promise<Post[]>} An array of posts.
  */
 async function getAll() {
   const col = await getCollection();
@@ -81,7 +80,7 @@ async function update(post) {
  */
 async function remove(id) {
   const col = await getCollection();
-  const result = await col.deleteOne({ _id: ObjectId(id) });
+  const result = await col.deleteOne({ id: id });
   if (result.deletedCount === 0) {
     throw new Error("post not found");
   }

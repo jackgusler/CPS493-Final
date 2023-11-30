@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import type { Workout } from '@/models/workouts';
+import { getUsers, type User } from '@/models/users';
+import { getWorkouts, type Workout } from '@/models/workouts';
 import { ref } from 'vue';
-import Users from '../data/users.json'
-import workoutsData from '../data/workouts.json'
 
+const workoutsData = ref<Workout[]>([]);
+const usersData = ref<User[]>([]);
 
-const workout = ref<Workout | null>(null)
+const fetchData = async () => {
+    workoutsData.value = await getWorkouts();
+    usersData.value = await getUsers();
+};
 
 function getWorkout(id: number) {
-    return workout.value = workoutsData.workouts.find((workout) => workout.id === id) || null;
+    return workoutsData.value.find((workout) => workout.id === id) ?? null;
 }
 
+fetchData();
 </script>
 
 <template>
@@ -34,7 +39,7 @@ function getWorkout(id: number) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="user in Users.users" :key="user.id">
+                        <tr v-for="user in usersData" :key="user.id">
                             <td>{{ user.firstName }} {{ user.lastName }}</td>
                             <td>{{ user.username }}</td>
                             <td>{{ user.email }}</td>

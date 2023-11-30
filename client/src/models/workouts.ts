@@ -9,8 +9,8 @@ export interface Workout {
     duration: number
 }
 
-export function getWorkouts(): Promise<Workout[]> {
-    return api("workouts")
+export async function getWorkouts(): Promise<Workout[]> {
+    return await api("workouts")
 }
 
 export function getWorkoutByName(name: string): Promise<Workout> {

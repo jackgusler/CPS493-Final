@@ -1,20 +1,35 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
-import { type Workout } from '../models/workouts'
-import workoutsData from '../data/workouts.json'
+import { getWorkouts, type Workout } from '../models/workouts'
 import { getSession } from '@/models/session'
+import { useUpdateUser } from '@/models/users';
 
 const session = getSession()
 
+const { updateUser } = useUpdateUser();
+
 const activeTab = ref('All');
-const workouts = ref<Workout[]>(workoutsData.workouts)
-const activeButton = ref<number>(workouts.value[0].id || 0)
-const selectedWorkout = ref<Workout | null>(workouts.value[0] || null)
+const originalWorkoutsData = ref<Workout[]>([]);
+const workoutsData = ref<Workout[]>([])
+
+const activeButton = ref<number>(0)
+const selectedWorkout = ref<Workout | null>(null)
 const searchQuery = ref('')
+
+const isInUserWorkouts = ref(false);
+
+const fetchData = async () => {
+    originalWorkoutsData.value = await getWorkouts();
+    workoutsData.value = originalWorkoutsData.value;
+    if (workoutsData.value.length > 0) {
+        activeButton.value = workoutsData.value[0].id
+        selectedWorkout.value = workoutsData.value[0]
+    }
+}
 
 const filteredWorkouts = computed(() => {
     const query = searchQuery.value.toLowerCase()
-    return workouts.value.filter((workout) => {
+    return workoutsData.value.filter((workout) => {
         return workout.name.toLowerCase().includes(query)
     })
 })
@@ -22,13 +37,13 @@ const filteredWorkouts = computed(() => {
 watch(activeTab, (newVal) => {
     // Update the filtered workouts based on the activeTab selection
     if (newVal === 'All') {
-        workouts.value = workoutsData.workouts
+        workoutsData.value = originalWorkoutsData.value.slice();
     } else if (newVal === 'Strength') {
-        workouts.value = workoutsData.workouts.filter((workout) => {
+        workoutsData.value = originalWorkoutsData.value.filter((workout) => {
             return workout.category.includes('Strength')
         })
     } else {
-        workouts.value = workoutsData.workouts.filter((workout) => {
+        workoutsData.value = originalWorkoutsData.value.filter((workout) => {
             return workout.category === newVal
         })
     }
@@ -41,18 +56,35 @@ function setActiveTab(tabName: string) {
 function toggle(workoutId: number) {
     if (activeButton.value !== workoutId) {
         activeButton.value = workoutId
-        selectedWorkout.value = workouts.value.find((workout) => workout.id === workoutId) || null
+        selectedWorkout.value = workoutsData.value.find((workout) => workout.id === workoutId) || null
     }
 }
 
+function updateUserWorkouts() {
+    isInUserWorkouts.value = session?.user?.workoutsByIds?.includes(selectedWorkout?.value?.id ?? -1) ?? false;
+}
+
 function addToPersonalWorkouts(id: number) {
-    if (id < 0) {
-        return
+    if (id < 0 || !session || !session.user) {
+        return;
     }
     if (session) {
-        session.user?.workoutsByIds?.push(id)
+        updateUser(
+            session.user?.id ?? -1,
+            session.user?.firstName ?? '',
+            session.user?.lastName  ?? '',
+            session.user?.username ?? '',
+            session.user?.email ?? '',
+            session.user?.password ?? '',
+            session.user?.admin ?? false,
+            session.user?.workoutsByIds?.concat(id) ?? [id] ?? [],        
+        ).then(() => {
+            updateUserWorkouts();
+        })
     }
 }
+
+fetchData()
 </script>
 
 

@@ -1,30 +1,18 @@
 <script setup lang="ts">
-import { getPosts, type Post } from '../models/posts'
-import userData from '../data/users.json'
-import { getSession } from '@/models/session'
-import workoutsData from '../data/workouts.json'
-import { computed, ref } from 'vue'
+import { watch } from 'vue'
+import { searchQuery, fetchFriendData, updateFilteredPosts, session, workoutsData, usersData, filteredPosts } from '@/models/deletePostModal';
 
-const session = getSession()
-const posts = ref<Post[]>([])
+watch(searchQuery, updateFilteredPosts);
 
-const searchQuery = ref('')
-
-const fetchPosts = async () => {
-    posts.value = await getPosts()
-    posts.value.reverse()
+function formatDate(dateString: string) {
+    const date = new Date(dateString)
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const year = date.getFullYear()
+    return `${month}/${day}/${year}`
 }
 
-fetchPosts()
-
-const filteredPosts = computed(() => {
-  const query = searchQuery.value.toLowerCase()
-  return posts.value.filter((post) => {
-    const username = userData.users[post.userId].username.toLowerCase()
-    return username.includes(query)
-  })
-})
-
+fetchFriendData();
 </script>
 
 <template>
@@ -45,7 +33,7 @@ const filteredPosts = computed(() => {
                 <div class="panel-block" :class="{ 'is-right': post.userId === session.user?.id }">
                     <div class="card">
                         <p class="username">
-                            {{ userData.users[post.userId].username }}
+                            {{ usersData[post.userId] ? usersData[post.userId].username : '' }}
                         </p>
                         <div class="card-image">
                             <figure class="image is-4by3">
@@ -56,10 +44,10 @@ const filteredPosts = computed(() => {
                             <div class="media">
                                 <div class="media-content">
                                     <p class="title is-4">
-                                        {{ userData.users[post.userId].firstName }} {{
-                                            userData.users[post.userId].lastName }}
+                                        {{ usersData[post.userId] ? usersData[post.userId].firstName : '' }} {{
+                                            usersData[post.userId] ? usersData[post.userId].lastName : '' }}
                                     <p class="subtitle is-6">
-                                        {{ workoutsData.workouts[post.workoutId].name }}
+                                        {{ workoutsData[post.workoutId] ? workoutsData[post.workoutId].name : '' }}
                                     </p>
                                     </p>
                                 </div>
@@ -68,7 +56,7 @@ const filteredPosts = computed(() => {
                             <div class="content">
                                 {{ post.description }}
                                 <hr>
-                                <time>{{ post.date }}</time>
+                                <time>{{ formatDate(post.date) }}</time>
                             </div>
                         </div>
                     </div>
