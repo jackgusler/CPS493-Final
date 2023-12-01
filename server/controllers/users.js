@@ -27,7 +27,7 @@ router
       })
       .catch(next);
   })
-  .get("/:id", (req, res, next) => {
+  .get("/:id", requireUser(), (req, res, next) => {
     get(+req.params.id)
       .then((user) => {
         if (user) {
@@ -38,15 +38,8 @@ router
       })
       .catch(next);
   })
-  .post("/signup", requireUser(true), (req, res, next) => {
+  .post("/signup", (req, res, next) => {
     create(req.body)
-      .then((user) => {
-        res.send(user);
-      })
-      .catch(next);
-  })
-  .post("/register", (req, res, next) => {
-    register(req.body)
       .then((user) => {
         res.send(user);
       })
@@ -60,8 +53,8 @@ router
       .catch(next);
   })
   .patch("/:id", requireUser(), (req, res, next) => {
-    if(req.user.id !== +req.params.id && !req.user.isAdmin) {
-      return next({ code: 403, message: "You can only edit your own account" })
+    if(req.user.id != req.params.id && !req.user.admin) {
+      return next({ status: 403, message: "You can only edit your own account" })
     }
     update(req.body)
       .then((user) => {

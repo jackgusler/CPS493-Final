@@ -1,19 +1,6 @@
 <script setup lang="ts">
-import { getUsers, type User } from '@/models/users';
-import { getWorkouts, type Workout } from '@/models/workouts';
-import { ref } from 'vue';
-
-const workoutsData = ref<Workout[]>([]);
-const usersData = ref<User[]>([]);
-
-const fetchData = async () => {
-    workoutsData.value = await getWorkouts();
-    usersData.value = await getUsers();
-};
-
-function getWorkout(id: number) {
-    return workoutsData.value.find((workout) => workout.id === id) ?? null;
-}
+import DeleteUserModal from '@/components/DeleteUserModal.vue';
+import { isModalActive, openModal, fetchData, usersData, getWorkout } from '@/models/deleteUserModal';
 
 fetchData();
 </script>
@@ -61,7 +48,7 @@ fetchData();
                                 </div>
                             </td>
                             <td>
-                                <div class="button">
+                                <div class="button" @click="openModal(user.id ?? -1)">
                                     <span class="icon is-small">
                                         <i class="fas fa-trash"></i>
                                     </span>
@@ -73,6 +60,7 @@ fetchData();
             </div>
         </nav>
     </div>
+    <DeleteUserModal :class="{ 'is-active': isModalActive }" />
 </template>
 
 <style scoped>
@@ -90,6 +78,6 @@ thead {
     position: sticky;
     top: 0;
     background-color: #cccccc;
-    z-index: 100;
+    z-index: 19;
 }
 </style>

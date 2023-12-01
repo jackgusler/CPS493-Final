@@ -70,41 +70,12 @@ async function search(query) {
 async function create(values) {
   const users = await getAll();
   const newUser = {
-    id: users.length,
+    id: users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 0,
     ...values,
   };
   const col = await getCollection();
   const result = await col.insertOne(newUser);
-  newUser._id = result.insertedId;
-  return newUser;
-}
-
-/**
- * @param {BaseUser} values - The user to create.
- * @returns {User} The created user.
- */
-async function register(values) {
-  // register is like create but with validation
-  // and some extra logic
-  const col = await getCollection();
-  const exists = await col.findOne({ username: values.username });
-  if (exists) {
-    throw new Error("Username already exists");
-  }
-
-  if (values.password.length < 8) {
-    throw new Error("Password must be at least 8 characters");
-  }
-
-  // TODO: Make sure user is create with least privileges
-  const newUser = {
-    id: data.users.length + 1,
-    ...values,
-  };
-  const result = await col.insertOne(newUser);
-  newUser._id = result.insertedId;
-
-  return newUser;
+  return { _id: result.insertedId, ...newUser };
 }
 
 /**
@@ -132,18 +103,16 @@ async function login(email, password) {
  */
 async function update(newValues) {
   const col = await getCollection();
+  const fieldsToUpdate = {};
+  for (let key in newValues) {
+    if (newValues[key] !== undefined) {
+      fieldsToUpdate[key] = newValues[key];
+    }
+  }
   const result = await col.findOneAndUpdate(
     { id: newValues.id },
     {
-      $set: {
-        firstName: newValues.firstName,
-        lastName: newValues.lastName,
-        username: newValues.username,
-        email: newValues.email,
-        password: newValues.password,
-        admin: newValues.admin,
-        workoutsByIds: newValues.workoutsByIds,
-      },
+      $set: fieldsToUpdate,
     },
     { returnDocument: "after" }
   );
@@ -163,14 +132,25 @@ async function remove(id) {
 }
 
 function generateJWT(user) {
+  const payload = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    admin: user.admin,
+  };
   return new Promise((resolve, reject) => {
-    jwt.sign(user, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN }, (err, token) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(token);
+    jwt.sign(
+      payload,
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN },
+      (err, token) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(token);
+        }
       }
-    });
+    );
   });
 }
 
@@ -191,7 +171,6 @@ module.exports = {
   get,
   search,
   create,
-  register,
   login,
   update,
   remove,

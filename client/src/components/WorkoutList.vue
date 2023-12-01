@@ -71,13 +71,9 @@ function addToPersonalWorkouts(id: number) {
     if (session) {
         updateUser(
             session.user?.id ?? -1,
-            session.user?.firstName ?? '',
-            session.user?.lastName  ?? '',
-            session.user?.username ?? '',
-            session.user?.email ?? '',
-            session.user?.password ?? '',
-            session.user?.admin ?? false,
-            session.user?.workoutsByIds?.concat(id) ?? [id] ?? [],        
+            {
+                workoutsByIds: session.user?.workoutsByIds?.concat(id) ?? [id],
+            }
         ).then(() => {
             updateUserWorkouts();
         })

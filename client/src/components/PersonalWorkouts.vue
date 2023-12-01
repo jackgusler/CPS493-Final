@@ -21,13 +21,9 @@ function getWorkout(id: number) {
 function removeWorkout(id: number) {
     updateUser(
         session.user?.id ?? -1,
-        session.user?.firstName ?? '',
-        session.user?.lastName ?? '',
-        session.user?.username ?? '',
-        session.user?.email ?? '',
-        session.user?.password ?? '',
-        session.user?.admin ?? false,
-        session.user?.workoutsByIds.filter((workout) => workout !== id) ?? [],   
+        {
+            workoutsByIds: session.user?.workoutsByIds.filter((workout) => workout !== id) ?? [],
+        }
     )
 }
 
@@ -97,10 +93,12 @@ onMounted(() => {
 .is-centered {
     margin: auto;
 }
+
 .button.is-trash {
     margin-left: auto;
     width: 5%;
 }
+
 .is-big {
     font-weight: bold;
     font-style: italic;

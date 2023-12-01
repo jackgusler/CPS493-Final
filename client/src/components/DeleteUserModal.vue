@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useDeletePost } from '@/models/posts';
-import { isModalActive, postId, fetchData } from '@/models/deletePostModal';
+import { fetchData, isModalActive, userId } from '@/models/deleteUserModal';
+import { useDeleteUser } from '@/models/users';
 
-const { deletePost } = useDeletePost();
+const { deleteUser } = useDeleteUser();
 
-function confirmDeletePost(id: number) {
+function confirmDeleteUser(id: number) {
     isModalActive.value = false;
-    return deletePost(id).then(fetchData)
+    return deleteUser(id).then(fetchData)
 }
 
-function cancelPost() {
+function cancel() {
     isModalActive.value = false;
-    postId.value = -1;
+    userId.value = -1;
 }
 
 </script>
@@ -22,12 +22,12 @@ function cancelPost() {
         <div class="modal-card">
             <div class="message is-danger">
                 <div class="message-body">
-                    Are you sure you want to delete this post?
+                    Are you sure you want to delete the user with the id of {{ userId }}?
                     <div class="modal-card-foot">
-                        <div class="button" @click="confirmDeletePost(postId)">
+                        <div class="button" @click="confirmDeleteUser(userId)">
                             Delete
                         </div>
-                        <div class="button" @click="cancelPost">
+                        <div class="button" @click="cancel">
                             Cancel
                         </div>
                     </div>

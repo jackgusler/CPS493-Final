@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getSession, useLogin } from "@/models/session";
-import { computed } from "vue";
+import EditUserModal from "@/components/EditUserModal.vue";
+import { isModalActive } from "@/models/editUserModal";
 
 const session = getSession();
 const { logout } = useLogin();
@@ -8,10 +9,6 @@ const { logout } = useLogin();
 const doLogout = () => {
     logout();
 }
-
-const blockedPassword = computed(() => {
-    return session.user?.password.replace(/./g, '*');
-});
 </script>
 
 <template>
@@ -53,7 +50,7 @@ const blockedPassword = computed(() => {
                     <div class="panel-block">
                         <div class="content">
                             <p>
-                                Password: {{ blockedPassword }}
+                                Password: ********
                             </p>
                         </div>
                     </div>
@@ -64,8 +61,11 @@ const blockedPassword = computed(() => {
                             </p>
                         </div>
                     </div>
-                    <div class="panel-block">
-                        <div type="submit" class="button" @click.prevent="doLogout">
+                    <div class="panel-block is-buttons">
+                        <div class="button is-on-top" @click.prevent="isModalActive = true">
+                            Edit User
+                        </div>
+                        <div class="button" @click.prevent="doLogout">
                             Logout
                         </div>
                     </div>
@@ -73,10 +73,17 @@ const blockedPassword = computed(() => {
             </div>
         </div>
     </div>
+    <EditUserModal  :class="{ 'is-active': isModalActive }"/>
 </template>
 
 <style scoped>
 .is-center{
     text-align: center;
+}
+.is-buttons{
+    display: block;
+}
+.is-on-top{
+    margin-bottom: 10px;
 }
 </style>

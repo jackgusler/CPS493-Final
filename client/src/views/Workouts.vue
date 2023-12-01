@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import { getWorkouts, type Workout } from '@/models/workouts';
-import { ref } from 'vue';
-
-const workoutsData = ref<Workout[]>([]);
-
-const fetchData = async () => {
-    workoutsData.value = await getWorkouts();
-};
+import { fetchData, workoutsData, openModal, isModalActive } from '@/models/deleteWorkoutModal';
+import DeleteWorkoutModal from '@/components/DeleteWorkoutModal.vue';
 
 fetchData();
 </script>
@@ -48,7 +42,7 @@ fetchData();
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="button">
+                                    <div class="button" @click="openModal(workout.id ?? -1)">
                                         <span class="icon is-small">
                                             <i class="fas fa-trash"></i>
                                         </span>
@@ -61,6 +55,7 @@ fetchData();
             </div>
         </nav>
     </div>
+    <DeleteWorkoutModal :class="{ 'is-active': isModalActive }" />
 </template>
 
 <style scoped>
@@ -77,6 +72,6 @@ thead {
     position: sticky;
     top: 0;
     background-color: #cccccc;
-    z-index: 100;
+    z-index: 19;
 }
 </style>

@@ -21,7 +21,7 @@ const isSignUpSubmitted = ref(false);
 
 async function validateLogin() {
   const userCheck = await checkIfUserExistsByEmail(email.value);
-  if(userCheck === undefined) {
+  if (userCheck === undefined) {
     errorMessage.value = 'That email does not exist. Please sign up or try again.';
     return false;
   }
@@ -59,6 +59,11 @@ async function validateSignUp() {
       errorMessage.value = 'Email must be valid.';
       return false;
     }
+    const emailCheck = await checkIfUserExistsByEmail(signUpEmail.value);
+    if (emailCheck !== false) {
+      errorMessage.value = 'That email is already taken.';
+      return false;
+    }
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
     if (!passwordRegex.test(signUpPassword.value)) {
       errorMessage.value = 'Password must be at least 8 characters long and contain at least one uppercase letter and one symbol.';
@@ -78,21 +83,23 @@ const doLogin = async () => {
     isLoginSubmitted.value = true;
     return;
   }
-  isLoginSubmitted.value = false;
   login(email.value, password.value);
+  isLoginSubmitted.value = false;
 }
 
 const doSignUp = async () => {
-  isSignUpSubmitted.value = true;
-  if (!(await validateSignUp())) return;
-  isSignUpSubmitted.value = false;
-  signUp(
+  if (!(await validateSignUp())) {
+    isSignUpSubmitted.value = true;
+    return;
+  }
+  await signUp(
     signUpFirstName.value,
     signUpLastName.value,
     signUpUsername.value,
     signUpEmail.value,
     signUpPassword.value,
   )
+  isSignUpSubmitted.value = false;
 }
 
 function toggleSignUp() {
@@ -116,7 +123,8 @@ function toggleSignUp() {
     <div class="panel">
       <p class="panel-heading is-centered">
         {{ isSignUp ? 'Sign Up' : 'Login' }}
-      <div class="button is-green" @click="toggleSignUp">{{ isSignUp ? 'Go to Login' : 'Go to Sign Up' }}</div>
+      <div class="button is-green is-not-header" @click="toggleSignUp">{{ isSignUp ? 'Go to Login' : 'Go to Sign Up' }}
+      </div>
       </p>
       <div class="form">
         <form v-if="!isSignUp">
@@ -195,5 +203,9 @@ function toggleSignUp() {
 
 .form {
   padding: 1rem;
+}
+
+.is-not-header {
+  font-weight: normal;
 }
 </style>

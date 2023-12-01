@@ -16,3 +16,19 @@ export async function getWorkouts(): Promise<Workout[]> {
 export function getWorkoutByName(name: string): Promise<Workout> {
     return api(`workouts/name`, { name }, "GET")
 }
+
+export function useDeleteWorkout() {
+    return {
+        async deleteWorkout(id: number): Promise<Workout | null> {
+            try {
+                const workout = await api(`workouts/${id}`, {}, "DELETE")
+                if (workout != undefined) {
+                    return workout
+                }
+            } catch (error) {
+                console.error("Error calling API:", error)
+            }
+            return null
+        },
+    }
+}
