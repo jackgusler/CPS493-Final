@@ -1,5 +1,6 @@
+import { ref } from "vue";
 import { api, getSession } from "./session";
-
+export const usersData = ref<User[]>([]);
 export interface User {
   id?: number;
   firstName: string;
@@ -16,12 +17,26 @@ export function getUsers(): Promise<User[]> {
   return api("users");
 }
 
+export async function fetchUserData() {
+  usersData.value = await getUsers();
+}
+
 export async function getUserByEmail(email: string): Promise<User | undefined> {
   try {
     const users = await getUsers();
     const user = users.find(
       (user) => user.email.toLowerCase() === email.toLowerCase()
     );
+    return user;
+  } catch (error) {
+    console.error("Error calling API:", error);
+  }
+}
+
+export async function getUserById(id: number): Promise<User | undefined> {
+  try {
+    const users = await getUsers();
+    const user = users.find((user) => user.id === id);
     return user;
   } catch (error) {
     console.error("Error calling API:", error);
@@ -107,6 +122,24 @@ export function useUpdateUser() {
       }
       return null;
     },
+    async updateAdmin(id: number, admin: boolean): Promise<User | null> {
+      try {
+        const user = await api(
+          `users/${id}`,
+          {
+            id,
+            admin,
+          },
+          "PATCH"
+        );
+        if (user != undefined) {
+          return session.user;
+        }
+      } catch (error) {
+        console.error("Error calling API:", error);
+      }
+      return null;
+    }
   };
 }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getSession, useLogin } from "@/models/session";
 import EditUserModal from "@/components/EditUserModal.vue";
-import { isModalActive } from "@/models/editUserModal";
+import { isEditModalActive, openEditModal } from "@/models/editUserModal";
 
 const session = getSession();
 const { logout } = useLogin();
@@ -62,7 +62,7 @@ const doLogout = () => {
                         </div>
                     </div>
                     <div class="panel-block is-buttons">
-                        <div class="button is-on-top" @click.prevent="isModalActive = true">
+                        <div class="button is-on-top" @click.prevent="openEditModal(session.user?.id ?? -1)">
                             Edit User
                         </div>
                         <div class="button" @click.prevent="doLogout">
@@ -73,7 +73,7 @@ const doLogout = () => {
             </div>
         </div>
     </div>
-    <EditUserModal  :class="{ 'is-active': isModalActive }"/>
+    <EditUserModal  :class="{ 'is-active': isEditModalActive }"/>
 </template>
 
 <style scoped>

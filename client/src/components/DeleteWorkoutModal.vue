@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { fetchData, isModalActive, workoutId } from '@/models/deleteWorkoutModal';
-import { useDeleteWorkout } from '@/models/workouts';
+import { isDeleteModalActive, workoutId } from '@/models/deleteWorkoutModal';
+import { useDeleteWorkout, fetchWorkoutData } from '@/models/workouts';
 
 const { deleteWorkout } = useDeleteWorkout();
 
 function confirmDeleteWorkout(id: number) {
-    isModalActive.value = false;
-    return deleteWorkout(id).then(fetchData)
+    isDeleteModalActive.value = false;
+    return deleteWorkout(id).then(fetchWorkoutData)
 }
 
 function cancel() {
-    isModalActive.value = false;
+    isDeleteModalActive.value = false;
     workoutId.value = -1;
 }
 

@@ -1,8 +1,23 @@
 <script setup lang="ts">
-import { fetchData, workoutsData, openModal, isModalActive } from '@/models/deleteWorkoutModal';
+import { openDeleteModal, isDeleteModalActive } from '@/models/deleteWorkoutModal';
 import DeleteWorkoutModal from '@/components/DeleteWorkoutModal.vue';
+import { openEditModal, isEditModalActive } from '@/models/editWorkoutModal';
+import EditWorkoutModal from '@/components/EditWorkoutModal.vue';
+import { workoutsData, fetchWorkoutData } from '@/models/workouts';
+import { onMounted } from 'vue';
 
-fetchData();
+const openEditModalThenFetch = async (id: number) => {
+    openEditModal(id);
+    await fetchWorkoutData();
+}
+const openDeleteModalThenFetch = async (id: number) => {
+    openDeleteModal(id);
+    await fetchWorkoutData();
+}
+
+onMounted(async () => {
+    await fetchWorkoutData();
+})
 </script>
 
 <template>
@@ -35,14 +50,14 @@ fetchData();
                                 <td>{{ workout.intensity }}</td>
                                 <td>{{ workout.duration }}</td>
                                 <td>
-                                    <div class="button">
+                                    <div class="button" @click="openEditModalThenFetch(workout.id ?? -1)">
                                         <span class="icon is-small">
                                             <i class="fas fa-edit"></i>
                                         </span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="button" @click="openModal(workout.id ?? -1)">
+                                    <div class="button" @click="openDeleteModalThenFetch(workout.id ?? -1)">
                                         <span class="icon is-small">
                                             <i class="fas fa-trash"></i>
                                         </span>
@@ -55,7 +70,8 @@ fetchData();
             </div>
         </nav>
     </div>
-    <DeleteWorkoutModal :class="{ 'is-active': isModalActive }" />
+    <EditWorkoutModal :class="{ 'is-active': isEditModalActive }" />
+    <DeleteWorkoutModal :class="{ 'is-active': isDeleteModalActive }" />
 </template>
 
 <style scoped>
@@ -68,6 +84,7 @@ fetchData();
     overflow: auto;
     max-height: 1125px;
 }
+
 thead {
     position: sticky;
     top: 0;

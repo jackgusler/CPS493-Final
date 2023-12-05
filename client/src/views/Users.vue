@@ -1,8 +1,33 @@
 <script setup lang="ts">
 import DeleteUserModal from '@/components/DeleteUserModal.vue';
-import { isModalActive, openModal, fetchData, usersData, getWorkout } from '@/models/deleteUserModal';
+import { isDeleteModalActive, openDeleteModal } from '@/models/deleteUserModal';
+import EditUserModal from '@/components/EditUserModal.vue';
+import { isEditModalActive, openEditModal } from '@/models/editUserModal';
+import { usersData } from '@/models/users';
+import { fetchUserData } from '@/models/users';
+import { fetchWorkoutData, getWorkout } from '@/models/workouts';
+import { onMounted } from 'vue';
 
-fetchData();
+const openEditModalThenFetch = async (id: number) => {
+    openEditModal(id);
+    await fetchUserData();
+    await fetchWorkoutData();
+}
+
+const openDeleteModalThenFetch = async (id: number) => {
+    openDeleteModal(id);
+    await fetchUserData();
+    await fetchWorkoutData();
+}
+
+const fetchData = async () => {
+    await fetchUserData();
+    await fetchWorkoutData();
+}
+
+onMounted(async () => {
+    await fetchData();
+});
 </script>
 
 <template>
@@ -41,14 +66,14 @@ fetchData();
                                 </div>
                             </td>
                             <td>
-                                <div class="button">
+                                <div class="button" @click="openEditModalThenFetch(user.id ?? -1)">
                                     <span class="icon is-small">
                                         <i class="fas fa-edit"></i>
                                     </span>
                                 </div>
                             </td>
                             <td>
-                                <div class="button" @click="openModal(user.id ?? -1)">
+                                <div class="button" @click="openDeleteModalThenFetch(user.id ?? -1)">
                                     <span class="icon is-small">
                                         <i class="fas fa-trash"></i>
                                     </span>
@@ -60,7 +85,8 @@ fetchData();
             </div>
         </nav>
     </div>
-    <DeleteUserModal :class="{ 'is-active': isModalActive }" />
+    <EditUserModal :class="{ 'is-active': isEditModalActive }" />
+    <DeleteUserModal :class="{ 'is-active': isDeleteModalActive }" />
 </template>
 
 <style scoped>

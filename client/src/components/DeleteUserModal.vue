@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { fetchData, isModalActive, userId } from '@/models/deleteUserModal';
-import { useDeleteUser } from '@/models/users';
+import { isDeleteModalActive, userId } from '@/models/deleteUserModal';
+import { fetchUserData, useDeleteUser } from '@/models/users';
 
 const { deleteUser } = useDeleteUser();
 
 function confirmDeleteUser(id: number) {
-    isModalActive.value = false;
-    return deleteUser(id).then(fetchData)
+    isDeleteModalActive.value = false;
+    return deleteUser(id).then(fetchUserData)
 }
 
 function cancel() {
-    isModalActive.value = false;
+    isDeleteModalActive.value = false;
     userId.value = -1;
 }
 

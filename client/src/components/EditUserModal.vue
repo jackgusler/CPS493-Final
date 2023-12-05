@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { isModalActive } from "@/models/editUserModal";
+import { userId, isEditModalActive, selectedUser } from "@/models/editUserModal";
 import { getSession } from "@/models/session";
-import { useUpdateUser, checkIfUserExistsByUsername, checkIfUserExistsByEmail, type User } from "@/models/users";
-import { ref } from "vue";
+import { getUserById, useUpdateUser, checkIfUserExistsByUsername, checkIfUserExistsByEmail, type User, fetchUserData } from "@/models/users";
+import { computed, onMounted, ref, watch } from "vue";
 
 const session = getSession();
-const { updateUser, updatePassword } = useUpdateUser();
+const { updateUser, updatePassword, updateAdmin } = useUpdateUser();
 const errorMessage = ref("");
 const isEditSubmitted = ref(false);
 
@@ -14,7 +14,13 @@ const newLastName = ref("");
 const newUsername = ref("");
 const newEmail = ref("");
 const newPassword = ref("");
-let newAdmin = ref(session.user?.admin)
+const newAdmin = ref(false);
+
+const setAdmin = () => {
+    if (selectedUser.value) {
+        newAdmin.value = selectedUser.value.admin;
+    }
+}
 
 async function validateEdit() {
     if (newFirstName.value !== "" && newFirstName.value.length < 1) {
@@ -29,7 +35,7 @@ async function validateEdit() {
         errorMessage.value = 'Username must be at least 2 characters long.';
         return false;
     }
-    if (newUsername.value !== "" && newUsername.value !== session.user?.username) {
+    if (newUsername.value !== "" && newUsername.value !== selectedUser?.value?.username) {
         const usernameCheck = await checkIfUserExistsByUsername(newUsername.value);
         if (usernameCheck !== false) {
             errorMessage.value = 'That username is already taken.';
@@ -41,7 +47,7 @@ async function validateEdit() {
         errorMessage.value = 'Email must be valid.';
         return false;
     }
-    if (newEmail.value !== "" && newEmail.value !== session.user?.email) {
+    if (newEmail.value !== "" && newEmail.value !== selectedUser?.value?.email) {
         const emailCheck = await checkIfUserExistsByEmail(newEmail.value);
         if (emailCheck !== false) {
             errorMessage.value = 'That email is already taken.';
@@ -60,8 +66,8 @@ async function validateEdit() {
 }
 
 const confirm = async () => {
-    isEditSubmitted.value = true;
     if (!(await validateEdit())) {
+        isEditSubmitted.value = true;
         return;
     }
     const updatedFields: Partial<User> = {};
@@ -69,14 +75,17 @@ const confirm = async () => {
     if (newLastName.value !== "") updatedFields.lastName = newLastName.value;
     if (newUsername.value !== "") updatedFields.username = newUsername.value;
     if (newEmail.value !== "") updatedFields.email = newEmail.value;
-    if (newAdmin.value !== session.user?.admin) updatedFields.admin = newAdmin.value;
     if (Object.keys(updatedFields).length > 0) {
-        updateUser(session.user!.id ?? -1, updatedFields);
+        await updateUser(selectedUser!.value?.id ?? -1, updatedFields);
+    }
+    if (newAdmin.value !== selectedUser?.value?.admin) {
+        await updateAdmin(selectedUser!.value?.id ?? -1, newAdmin.value ?? false);
     }
     if (newPassword.value !== "") {
-        updatePassword(session.user!.id ?? -1, newPassword.value);
+        await updatePassword(selectedUser!.value?.id ?? -1, newPassword.value);
     }
     isEditSubmitted.value = false;
+    await fetchUserData();
     cancel();
 }
 
@@ -86,12 +95,12 @@ const cancel = () => {
     newUsername.value = "";
     newEmail.value = "";
     newPassword.value = "";
-    newAdmin.value = session.user?.admin;
     errorMessage.value = "";
     isEditSubmitted.value = false;
-    isModalActive.value = false;
+    isEditModalActive.value = false;
 }
 
+watch(selectedUser, setAdmin);
 </script>
 
 <template>
@@ -100,25 +109,25 @@ const cancel = () => {
         <div class="modal-content">
             <div class="box">
                 <div class="field">
-                    <label class="label">First Name: {{ session.user?.firstName }} </label>
+                    <label class="label">First Name: {{ selectedUser?.firstName }} </label>
                     <div class="control">
                         <input class="input" type="text" placeholder="New First Name" v-model="newFirstName">
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Last Name: {{ session.user?.lastName }} </label>
+                    <label class="label">Last Name: {{ selectedUser?.lastName }} </label>
                     <div class="control">
                         <input class="input" type="text" placeholder="New Last Name" v-model="newLastName">
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Username: @{{ session.user?.username }} </label>
+                    <label class="label">Username: @{{ selectedUser?.username }} </label>
                     <div class="control">
                         <input class="input" type="text" placeholder="New Username" v-model="newUsername">
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Email: {{ session.user?.email }} </label>
+                    <label class="label">Email: {{ selectedUser?.email }} </label>
                     <div class="control">
                         <input class="input" type="text" placeholder="New Email" v-model="newEmail">
                     </div>
@@ -129,11 +138,11 @@ const cancel = () => {
                         <input class="input" type="password" placeholder="New Password" v-model="newPassword">
                     </div>
                 </div>
-                <div class="field" v-if="session.user?.admin">
-                    <label class="label">Admin: {{ session.user?.admin }} </label>
+                <div class="field" v-if="session.user && session.user.admin">
+                    <label class="label">Admin: {{ selectedUser?.admin }} </label>
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox" v-model="newAdmin">
+                            <input type="checkbox" v-model="newAdmin" :disabled="session.user.id === selectedUser?.id">
                             Admin
                         </label>
                     </div>
@@ -151,7 +160,6 @@ const cancel = () => {
                 </div>
             </div>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
     </div>
 </template>
 
