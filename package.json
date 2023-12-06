@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npm i --production && cd client && npm i && npm run build",
     "start": "node server/index.js",
-    "dev": "nodemon --watch ./server server/index.js"
+    "dev": "nodemon --watch ./server server/index.js && cd client && npm run dev"
   },
   "dependencies": {
     "bulma": "^0.9.4",
