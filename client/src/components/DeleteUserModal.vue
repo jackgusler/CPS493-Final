@@ -1,11 +1,24 @@
 <script setup lang="ts">
+import { getPosts, useDeletePost, type Post } from '@/models/posts';
 import { isDeleteModalActive, userId } from '@/models/deleteUserModal';
 import { fetchUserData, useDeleteUser } from '@/models/users';
+import { ref } from 'vue';
 
+const { deletePost } = useDeletePost();
 const { deleteUser } = useDeleteUser();
+const postsData = ref<Post[]>([]);
+
+async function fetchPostsData() {
+        postsData.value = await getPosts();
+}
 
 function confirmDeleteUser(id: number) {
     isDeleteModalActive.value = false;
+    postsData.value.forEach(post => {
+        if (post.userId === id) {
+            deletePost(post.id);
+        }
+    });
     return deleteUser(id).then(fetchUserData)
 }
 
@@ -14,6 +27,7 @@ function cancel() {
     userId.value = -1;
 }
 
+fetchPostsData();
 </script>
 
 <template>

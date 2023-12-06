@@ -27,6 +27,9 @@ function closeMessage() {
 }
 
 function handleCloseModal() {
+    workoutChoice = -1
+    description = ''
+    picture = ''
     closeMessage()
     closeModal()
     openSuccessMessage()

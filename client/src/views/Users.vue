@@ -7,6 +7,9 @@ import { usersData } from '@/models/users';
 import { fetchUserData } from '@/models/users';
 import { fetchWorkoutData, getWorkout } from '@/models/workouts';
 import { onMounted } from 'vue';
+import { getSession } from '@/models/session';
+
+const session = getSession();
 
 const openEditModalThenFetch = async (id: number) => {
     openEditModal(id);
@@ -73,7 +76,7 @@ onMounted(async () => {
                                 </div>
                             </td>
                             <td>
-                                <div class="button" @click="openDeleteModalThenFetch(user.id ?? -1)">
+                                <div v-if="session.user?.id != user.id" class="button" @click="openDeleteModalThenFetch(user.id ?? -1)">
                                     <span class="icon is-small">
                                         <i class="fas fa-trash"></i>
                                     </span>
