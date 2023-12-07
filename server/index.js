@@ -24,7 +24,7 @@ app
     res.header("Access-Control-Allow-Methods", "*");
     res.header("Access-Control-Allow-Headers", "*");
     if (req.method === "OPTIONS") {
-      return res.send(200);
+      return res.sendStatus(200);
     }
     next();
   })
