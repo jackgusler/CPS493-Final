@@ -47,7 +47,7 @@ fetchUserData()
                     <div class="panel-block is-right">
                         <div class="card">
                             <p class="username">
-                                {{ usersData[post.userId] ? usersData[post.userId].username : '' }}
+                                @{{ usersData[post.userId] ? usersData[post.userId].username : '' }}
                             </p>
                             <div class="card-image">
                                 <figure class="image is-4by3">

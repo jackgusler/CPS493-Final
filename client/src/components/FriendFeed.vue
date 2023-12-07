@@ -33,7 +33,7 @@ fetchFriendData();
                 <div class="panel-block" :class="{ 'is-right': post.userId === session.user?.id }">
                     <div class="card">
                         <p class="username">
-                            {{ usersData[post.userId] ? usersData[post.userId].username : '' }}
+                            @{{ usersData[post.userId] ? usersData[post.userId].username : '' }}
                         </p>
                         <div class="card-image">
                             <figure class="image is-4by3">
