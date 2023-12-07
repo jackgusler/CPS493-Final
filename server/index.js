@@ -1,5 +1,3 @@
-// express.js
-
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
@@ -16,7 +14,13 @@ const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 app
-  .use(cors())
+.use(cors({
+  origin: "http://localhost:5173", // Replace with your actual frontend origin
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+}))
+
   .use("/", express.static(path.join(__dirname, "../client/dist/")))
   .use(express.json())
 
