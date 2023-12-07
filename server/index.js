@@ -1,6 +1,5 @@
 const path = require("path");
 const express = require("express");
-const cors = require("cors");
 require("dotenv").config();
 const workoutController = require("./controllers/workouts");
 const userController = require("./controllers/users");
@@ -14,27 +13,19 @@ const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 app
-.use(cors({
-  origin: "http://localhost:5173", // Replace with your actual frontend origin
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-}))
-
   .use("/", express.static(path.join(__dirname, "../client/dist/")))
   .use(express.json())
 
   // CORS
-  // .use((req, res, next) => {
-  //   res.header("Access-Control-Allow-Origin", "*");
-  //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  //   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  //   res.header("Access-Control-Allow-Credentials", "true");
-  //   if (req.method === "OPTIONS") {
-  //     return res.sendStatus(200);
-  //   }
-  //   next();
-  // })
+  .use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    if (req.method === "OPTIONS") {
+      return res.send(200);
+    }
+    next();
+  })
 
   .use(parseAuthorizationToken)
 
