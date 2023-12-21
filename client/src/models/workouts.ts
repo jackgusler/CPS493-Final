@@ -15,6 +15,10 @@ export async function getWorkouts(): Promise<Workout[]> {
   return await api("workouts");
 }
 
+export async function searchWorkouts(name: string, page: number) {
+  return await api(`workouts/search?q=${name}&page=${page}`);
+}
+
 export async function fetchWorkoutData() {
   workoutsData.value = await getWorkouts();
 }
